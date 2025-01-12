@@ -4,4 +4,8 @@
     <string name="field_name">Nome</string>
     <string name="field_email">Email</string>
     <string name="field_password">Password</string>
+    <string name="button_login">Iniciar Sessão</string>
+    <string name="button_register">Registar</string>
+    <string name="link_register">Não tem conta?</string>
+    <string name="button_logout">Terminar Sessão</string>
 </resources>
