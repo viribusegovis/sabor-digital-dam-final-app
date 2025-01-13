@@ -16,6 +16,12 @@
         android:theme="@style/Theme.MyTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.recipe_list.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".ui.auth.login.LoginActivity"
             android:exported="false" />
         <activity
