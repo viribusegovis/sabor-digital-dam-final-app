@@ -18,26 +18,74 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/primary"
-                app:navigationIcon="@drawable/ic_menu" />
+                android:background="@color/primary" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
-            android:id="@+id/contentFrame"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/authDebug"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Check Token Validity"
-                android:textColor="@color/primary" />
-        </FrameLayout>
+                android:orientation="vertical"
+                android:padding="16dp">
 
+                <!-- Ingredients Section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Ingredientes Populares"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingredientsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="?android:attr/listDivider" />
+
+                <!-- Categories Section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Categorias"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categoriesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addRecipeFab"
+            style="@style/Widget.App.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/primary" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

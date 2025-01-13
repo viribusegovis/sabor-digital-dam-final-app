@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.gson)
     //Google Material
     implementation(libs.material.v1110)
+    //Glide
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

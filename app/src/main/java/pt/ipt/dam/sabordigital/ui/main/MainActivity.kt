@@ -4,16 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.databinding.ActivityMainBinding
 import pt.ipt.dam.sabordigital.databinding.NavigationLayoutBinding
 import pt.ipt.dam.sabordigital.ui.auth.login.LoginActivity
 import pt.ipt.dam.sabordigital.ui.auth.register.RegisterActivity
+import pt.ipt.dam.sabordigital.utils.CategoryAdapter
+import pt.ipt.dam.sabordigital.utils.IngredientAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -29,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             NavigationLayoutBinding.bind(binding.root.findViewById(R.id.navigationLayout))
 
         setContentView(binding.root)
+        setupRecyclerViews()
         setupObservers()
         setupNavigationDrawer()
         viewModel.checkAuthState(this)
@@ -36,9 +40,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         viewModel.authState.observe(this) { isAuthenticated ->
-            binding.authDebug.setOnClickListener {
-                Toast.makeText(this, "Token Valid: " + isAuthenticated, Toast.LENGTH_LONG).show()
-            }
             if (isAuthenticated) {
                 navigationBinding.loginButton.visibility = View.GONE
                 navigationBinding.registerButton.visibility = View.GONE
@@ -49,7 +50,26 @@ class MainActivity : AppCompatActivity() {
                 navigationBinding.logoutButton.visibility = View.GONE
             }
         }
+        viewModel.authState.observe(this) { isAuthenticated ->
+            if (isAuthenticated) {
+                viewModel.fetchCategories(this)
+                viewModel.fetchPopularIngredients(this)
+            }
+        }
+
+        viewModel.categories.observe(this) { categories ->
+            binding.categoriesRecyclerView.adapter = CategoryAdapter(categories) { category ->
+                // Handle category click
+            }
+        }
+
+        viewModel.ingredients.observe(this) { ingredients ->
+            binding.ingredientsRecyclerView.adapter = IngredientAdapter(ingredients) { ingredient ->
+                // Handle ingredient click
+            }
+        }
     }
+
 
     private fun setupNavigationDrawer() {
         setSupportActionBar(binding.toolbar)
@@ -76,6 +96,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun setupRecyclerViews() {
+        // Horizontal layout for ingredients
+        binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
+        // Grid layout for categories (2 columns)
+        binding.categoriesRecyclerView.layoutManager = GridLayoutManager(this, 2)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -83,4 +115,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }
