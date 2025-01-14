@@ -8,8 +8,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.databinding.ActivityMainBinding
 import pt.ipt.dam.sabordigital.databinding.NavigationLayoutBinding
@@ -31,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             NavigationLayoutBinding.bind(binding.root.findViewById(R.id.navigationLayout))
         setContentView(binding.root)
 
+        viewModel.checkAuthState(binding.root.context)
         setupNavigationDrawer()
         setupObservers()
 
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
     }
-    
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -86,4 +85,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }

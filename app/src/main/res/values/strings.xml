@@ -11,4 +11,29 @@
     <string name="app_logo">Logótipo da aplicação\n</string>
     <string name="link_login">Já tem conta? Faça login</string>
     <string name="desc_ingredient">Ingredient logo</string>
+    <!-- Recipe Difficulties -->
+    <string name="difficulty_easy">☆☆☆</string>
+    <string name="difficulty_medium">★★☆</string>
+    <string name="difficulty_hard">★★★</string>
+    <string name="difficulty_unknown">Desconhecido</string>
+
+    <!-- Recipe List Item -->
+    <string name="recipe_prep_time_format">%d min</string>
+    <string name="recipe_servings_format">%d pessoas</string>
+
+    <!-- Categories -->
+    <string name="category_main_dishes">Pratos Principais</string>
+    <string name="category_desserts">Sobremesas</string>
+    <string name="category_soups">Sopas</string>
+    <string name="category_starters">Entradas</string>
+    <string name="category_vegetarian">Vegetariano</string>
+
+    <!-- Search and Filters -->
+    <string name="search_hint">Procurar receitas</string>
+    <string name="filter_by_category">Filtrar por categoria</string>
+    <string name="filter_by_difficulty">Filtrar por dificuldade</string>
+
+    <!-- Empty States -->
+    <string name="no_recipes_found">Nenhuma receita encontrada</string>
+    <string name="error_loading_recipes">Erro ao carregar receitas</string>
 </resources>

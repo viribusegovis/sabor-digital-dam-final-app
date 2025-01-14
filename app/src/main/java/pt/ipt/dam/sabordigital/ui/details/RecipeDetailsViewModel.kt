@@ -19,7 +19,7 @@ class RecipeDetailsViewModel : ViewModel() {
         val token = sharedPrefs.getString("jwt_token", null)
 
         token?.let {
-            RetrofitInitializer().recipeService().getRecipeDetails(it, recipeId)
+            RetrofitInitializer().recipeService().getRecipeDetails(recipeId)
                 .enqueue(object : Callback<Recipe> {
                     override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
                         if (response.isSuccessful) {
