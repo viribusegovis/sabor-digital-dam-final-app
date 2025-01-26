@@ -36,4 +36,6 @@
     <!-- Empty States -->
     <string name="no_recipes_found">Nenhuma receita encontrada</string>
     <string name="error_loading_recipes">Erro ao carregar receitas</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="instructions">Instruções</string>
 </resources>
