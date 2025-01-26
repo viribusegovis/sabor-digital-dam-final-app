@@ -42,7 +42,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun fetchPopularIngredients(context: Context) {
-        RetrofitInitializer().ingredientService().getTop10Ingredients()
+        RetrofitInitializer().ingredientService().getTop10Ingredients(10)
             .enqueue(object : Callback<List<Ingredient>> {
                 override fun onResponse(
                     call: Call<List<Ingredient>>,

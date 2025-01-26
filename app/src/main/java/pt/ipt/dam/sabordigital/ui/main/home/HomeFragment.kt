@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
                 // Navigate to RecipeListFragment with category filter
                 val fragment = RecipeListFragment().apply {
                     arguments = Bundle().apply {
-                        putInt("category_id", category.id)
+                        putInt("category_id", category.category_id)
                         putString("category_name", category.name)
                     }
                 }
@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
                 // Navigate to RecipeListFragment with ingredient filter
                 val fragment = RecipeListFragment().apply {
                     arguments = Bundle().apply {
-                        putInt("ingredient_id", ingredient.id)
+                        putInt("ingredient_id", ingredient.ingredient_id)
                         putString("ingredient_name", ingredient.name)
                     }
                 }

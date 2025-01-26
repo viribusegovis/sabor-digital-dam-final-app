@@ -38,7 +38,27 @@ class RecipeListFragment : Fragment() {
         setupSearchView()
         setupFilters()
         setupObservers()
-        loadInitialData()
+        handleArguments()
+        viewModel.loadCategories()
+        viewModel.loadIngredients()
+    }
+
+    private fun handleArguments() {
+        arguments?.let { bundle ->
+            when {
+                bundle.containsKey("category_id") -> {
+                    val categoryId = bundle.getInt("category_id")
+                    viewModel.filterByCategory(categoryId)
+                }
+
+                bundle.containsKey("ingredient_id") -> {
+                    val ingredientId = bundle.getInt("ingredient_id")
+                    viewModel.filterByIngredient(ingredientId)
+                }
+
+                else -> loadInitialData()
+            }
+        } ?: loadInitialData()
     }
 
     private fun setupRecyclerView() {
@@ -56,7 +76,7 @@ class RecipeListFragment : Fragment() {
             putExtra("recipe_id", recipe.id)
             putExtra("recipe_title", recipe.title)
             putExtra("recipe_description", recipe.description)
-            putExtra("recipe_preparation_time", recipe.preparationTime)
+            putExtra("recipe_preparation_time", recipe.preparation_time)
             putExtra("recipe_servings", recipe.servings)
             putExtra("recipe_difficulty", recipe.difficulty)
             putExtra("recipe_image_url", recipe.imageUrl)
@@ -84,34 +104,55 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun setupFilters() {
-        // Map of category IDs to names based on the database
-        val categories = mapOf(
-            1 to "Pratos Principais",
-            2 to "Sobremesas",
-            3 to "Sopas",
-            4 to "Entradas",
-            5 to "Vegetariano"
-        )
-
-        categories.forEach { (id, name) ->
-            val chip = Chip(context).apply {
-                text = name
-                isCheckable = true
-                tag = id  // Store the category ID in the chip's tag
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
+            binding.chipGroupCategories.removeAllViews()
+            categories.forEach { category ->
+                val chip = Chip(context).apply {
+                    text = category.name
+                    isCheckable = true
+                    tag = category.category_id
+                }
+                binding.chipGroupCategories.addView(chip)
             }
-            binding.chipGroupCategories.addView(chip)
         }
 
         binding.chipGroupCategories.setOnCheckedStateChangeListener { group, checkedIds ->
+            binding.chipGroupIngredients.clearCheck()
+
             if (checkedIds.isEmpty()) {
                 loadInitialData()
             } else {
                 val chip = group.findViewById<Chip>(checkedIds.first())
-                val categoryId = chip.tag as Int
-                viewModel.filterByCategory(categoryId)
+                val category_id = chip.tag as Int
+                viewModel.filterByCategory(category_id)
+            }
+        }
+
+        viewModel.ingredients.observe(viewLifecycleOwner) { ingredients ->
+            binding.chipGroupIngredients.removeAllViews()
+            ingredients.forEach { ingredient ->
+                val chip = Chip(context).apply {
+                    text = ingredient.name
+                    isCheckable = true
+                    tag = ingredient.ingredient_id
+                }
+                binding.chipGroupIngredients.addView(chip)
+            }
+        }
+
+        binding.chipGroupIngredients.setOnCheckedStateChangeListener { group, checkedIds ->
+            binding.chipGroupCategories.clearCheck()
+
+            if (checkedIds.isEmpty()) {
+                loadInitialData()
+            } else {
+                val chip = group.findViewById<Chip>(checkedIds.first())
+                val ingredient_id = chip.tag as Int
+                viewModel.filterByIngredient(ingredient_id)
             }
         }
     }
+
 
     private fun setupObservers() {
 

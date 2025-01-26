@@ -37,7 +37,7 @@ class RecipeAdapter(
 
             timeChip.text = root.context.getString(
                 R.string.recipe_prep_time_format,
-                recipe.preparationTime
+                recipe.preparation_time
             )
 
             servingsChip.text = root.context.getString(

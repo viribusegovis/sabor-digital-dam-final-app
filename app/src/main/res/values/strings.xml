@@ -12,7 +12,7 @@
     <string name="link_login">Já tem conta? Faça login</string>
     <string name="desc_ingredient">Ingredient logo</string>
     <!-- Recipe Difficulties -->
-    <string name="difficulty_easy">☆☆☆</string>
+    <string name="difficulty_easy">★☆☆</string>
     <string name="difficulty_medium">★★☆</string>
     <string name="difficulty_hard">★★★</string>
     <string name="difficulty_unknown">Desconhecido</string>
