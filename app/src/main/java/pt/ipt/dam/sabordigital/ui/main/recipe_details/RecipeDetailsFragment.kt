@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
 import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.databinding.FragmentRecipeDetailsBinding
 
@@ -32,36 +31,35 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
-            binding.apply {
-                titleText.text = recipe.title
-                descriptionText.text = recipe.description
+            binding.titleText.text = recipe.title
+            binding.descriptionText.text = recipe.description
 
-                // Load recipe image
-                if (!recipe.imageUrl.isNullOrEmpty()) {
-                    Glide.with(requireContext())
-                        .load(recipe.imageUrl)
-                        .centerCrop()
-                        .into(recipeImage)
-                }
-
-                // Set chips information
-                difficultyChip.text = when (recipe.difficulty) {
-                    "FACIL" -> getString(R.string.difficulty_easy)
-                    "MEDIO" -> getString(R.string.difficulty_medium)
-                    "DIFICIL" -> getString(R.string.difficulty_hard)
-                    else -> getString(R.string.difficulty_unknown)
-                }
-
-                timeChip.text = getString(
-                    R.string.recipe_prep_time_format,
-                    recipe.preparation_time
-                )
-
-                servingsChip.text = getString(
-                    R.string.recipe_servings_format,
-                    recipe.servings
-                )
+            // Load recipe image
+            if (!recipe.imageUrl.isNullOrEmpty()) {
+                /*Glide.with(requireContext())
+                    .load(recipe.imageUrl)
+                    .centerCrop()
+                    .into(recipeImage)*/
             }
+
+            // Set chips information
+            binding.difficultyChip.text = when (recipe.difficulty) {
+                "FACIL" -> getString(R.string.difficulty_easy)
+                "MEDIO" -> getString(R.string.difficulty_medium)
+                "DIFICIL" -> getString(R.string.difficulty_hard)
+                else -> getString(R.string.difficulty_unknown)
+            }
+
+            binding.timeChip.text = getString(
+                R.string.recipe_prep_time_format,
+                recipe.preparation_time
+            )
+
+            binding.servingsChip.text = getString(
+                R.string.recipe_servings_format,
+                recipe.servings
+            )
+
         }
 
         viewModel.ingredients.observe(viewLifecycleOwner) { ingredients ->
