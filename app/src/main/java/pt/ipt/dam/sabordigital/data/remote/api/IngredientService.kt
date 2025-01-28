@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface IngredientService {
     @GET("/ingredients/top/{limit}")
-    fun getTop10Ingredients(
+    fun getTopIngredients(
         @Path("limit") limit: Int
     ): Call<List<Ingredient>>
 

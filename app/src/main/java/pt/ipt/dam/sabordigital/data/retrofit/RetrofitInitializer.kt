@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitInitializer {
     private val host =
-        "https://aead258f-3ac8-46e5-bc7d-ed59f763a0c3-00-1tdcy7kycflhy.spock.replit.dev/"
+        "http://10.0.2.2:8080"
     private val gson = GsonBuilder().setLenient().create()
 
     private val retrofit = Retrofit.Builder()

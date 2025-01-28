@@ -1,6 +1,5 @@
 package pt.ipt.dam.sabordigital.ui.main.re
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,7 @@ import com.google.android.material.chip.Chip
 import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.data.remote.models.Recipe
 import pt.ipt.dam.sabordigital.databinding.FragmentRecipeListBinding
-import pt.ipt.dam.sabordigital.ui.details.RecipeDetailsActivity
+import pt.ipt.dam.sabordigital.ui.main.recipe_details.RecipeDetailsFragment
 import pt.ipt.dam.sabordigital.ui.main.recipe_list.ui.recipelist.RecipeListViewModel
 import pt.ipt.dam.sabordigital.utils.RecipeAdapter
 
@@ -39,26 +38,29 @@ class RecipeListFragment : Fragment() {
         setupFilters()
         setupObservers()
         handleArguments()
-        viewModel.loadCategories()
-        viewModel.loadIngredients()
     }
 
     private fun handleArguments() {
-        arguments?.let { bundle ->
-            when {
-                bundle.containsKey("category_id") -> {
-                    val categoryId = bundle.getInt("category_id")
-                    viewModel.filterByCategory(categoryId)
-                }
+        viewModel.loadCategories()
+        viewModel.loadIngredients()
+        if (viewModel.hasFilters()) {
+            viewModel.refreshWithCurrentFilters()
+        } else {
+            arguments?.let { bundle ->
+                when {
+                    bundle.containsKey("category_id") -> {
+                        val categoryId = bundle.getInt("category_id")
+                        viewModel.filterByCategory(categoryId)
+                    }
 
-                bundle.containsKey("ingredient_id") -> {
-                    val ingredientId = bundle.getInt("ingredient_id")
-                    viewModel.filterByIngredient(ingredientId)
+                    bundle.containsKey("ingredient_id") -> {
+                        val ingredientId = bundle.getInt("ingredient_id")
+                        viewModel.filterByIngredient(ingredientId)
+                    }
                 }
+            } ?: viewModel.refreshWithCurrentFilters()
+        }
 
-                else -> loadInitialData()
-            }
-        } ?: loadInitialData()
     }
 
     private fun setupRecyclerView() {
@@ -72,16 +74,22 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun navigateToRecipeDetails(recipe: Recipe) {
-        val intent = Intent(requireContext(), RecipeDetailsActivity::class.java).apply {
-            putExtra("recipe_id", recipe.id)
-            putExtra("recipe_title", recipe.title)
-            putExtra("recipe_description", recipe.description)
-            putExtra("recipe_preparation_time", recipe.preparation_time)
-            putExtra("recipe_servings", recipe.servings)
-            putExtra("recipe_difficulty", recipe.difficulty)
-            putExtra("recipe_image_url", recipe.imageUrl)
+        // Navigate to RecipeListFragment with ingredient filter
+        val fragment = RecipeDetailsFragment().apply {
+            arguments = Bundle().apply {
+                putInt("recipe_id", recipe.id)
+                putString("recipe_title", recipe.title)
+                putString("recipe_description", recipe.description)
+                putInt("recipe_preparation_time", recipe.preparation_time)
+                putInt("recipe_servings", recipe.servings)
+                putString("recipe_difficulty", recipe.difficulty)
+                putString("recipe_image_url", recipe.imageUrl)
+            }
         }
-        startActivity(intent)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun setupSearchView() {
@@ -94,8 +102,16 @@ class RecipeListFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText.isNullOrBlank()) {
-                        loadInitialData()
+                    if (hasFocus()) { // Only handle user-initiated changes
+                        when {
+                            newText.isNullOrBlank() -> {
+                                viewModel.loadRecipes()
+                                binding.chipGroupCategories.clearCheck()
+                                binding.chipGroupIngredients.clearCheck()
+                            }
+
+                            else -> viewModel.searchRecipes(newText)
+                        }
                     }
                     return true
                 }
@@ -111,20 +127,26 @@ class RecipeListFragment : Fragment() {
                     text = category.name
                     isCheckable = true
                     tag = category.category_id
+                    isChecked = category.category_id == viewModel.getCurrentCategoryId()
+
                 }
                 binding.chipGroupCategories.addView(chip)
             }
         }
 
         binding.chipGroupCategories.setOnCheckedStateChangeListener { group, checkedIds ->
-            binding.chipGroupIngredients.clearCheck()
-
-            if (checkedIds.isEmpty()) {
-                loadInitialData()
-            } else {
+            if (checkedIds.isNotEmpty()) {
+                // Clear ingredients only when actively selecting a category
+                binding.chipGroupIngredients.post {
+                    binding.chipGroupIngredients.clearCheck()
+                }
                 val chip = group.findViewById<Chip>(checkedIds.first())
-                val category_id = chip.tag as Int
-                viewModel.filterByCategory(category_id)
+                viewModel.filterByCategory(chip.tag as Int)
+            } else {
+                // Only clear if there was an active category filter
+                if (viewModel.getCurrentCategoryId() != null) {
+                    viewModel.clearFilters()
+                }
             }
         }
 
@@ -135,27 +157,32 @@ class RecipeListFragment : Fragment() {
                     text = ingredient.name
                     isCheckable = true
                     tag = ingredient.ingredient_id
+                    isChecked = ingredient.ingredient_id == viewModel.getCurrentIngredientId()
+
                 }
                 binding.chipGroupIngredients.addView(chip)
             }
         }
 
         binding.chipGroupIngredients.setOnCheckedStateChangeListener { group, checkedIds ->
-            binding.chipGroupCategories.clearCheck()
-
-            if (checkedIds.isEmpty()) {
-                loadInitialData()
-            } else {
+            if (checkedIds.isNotEmpty()) {
+                // Clear categories only when actively selecting an ingredient
+                binding.chipGroupCategories.post {
+                    binding.chipGroupCategories.clearCheck()
+                }
                 val chip = group.findViewById<Chip>(checkedIds.first())
-                val ingredient_id = chip.tag as Int
-                viewModel.filterByIngredient(ingredient_id)
+                viewModel.filterByIngredient(chip.tag as Int)
+            } else {
+                // Only clear if there was an active ingredient filter
+                if (viewModel.getCurrentIngredientId() != null) {
+                    viewModel.clearFilters()
+                }
             }
         }
     }
 
 
     private fun setupObservers() {
-
         viewModel.recipes.observe(viewLifecycleOwner) { recipes ->
             recipeAdapter = RecipeAdapter(recipes) { recipe ->
                 navigateToRecipeDetails(recipe)
@@ -166,11 +193,21 @@ class RecipeListFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            if (!isLoading) {
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
         }
-    }
 
-    private fun loadInitialData() {
-        viewModel.loadRecipes()
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = true
+            viewModel.refreshWithCurrentFilters()
+        }
+
+        binding.swipeRefreshLayout.setColorSchemeResources(
+            R.color.primary,
+            R.color.primary_dark,
+            R.color.accent
+        )
     }
 
     override fun onDestroyView() {
