@@ -1,15 +1,15 @@
 package pt.ipt.dam.sabordigital.data.remote.api
 
-import pt.ipt.dam.sabordigital.data.remote.models.Ingredient
 import pt.ipt.dam.sabordigital.data.remote.models.Instruction
 import pt.ipt.dam.sabordigital.data.remote.models.Recipe
+import pt.ipt.dam.sabordigital.data.remote.models.RecipeIngredient
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RecipeService {
-    @GET("/recipes")
+    @GET("/recipes/")
     fun getAllRecipes(): Call<List<Recipe>>
 
     @GET("/recipes/{id}")
@@ -35,7 +35,7 @@ interface RecipeService {
     @GET("/recipes/{recipeId}/ingredients")
     fun getRecipeIngredients(
         @Path("recipeId") recipeId: Int
-    ): Call<List<Ingredient>>
+    ): Call<List<RecipeIngredient>>
 
     @GET("/recipes/{recipeId}/instructions")
     fun getRecipeInstructions(

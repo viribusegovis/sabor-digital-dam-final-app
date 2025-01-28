@@ -134,15 +134,7 @@ class RecipeListFragment : Fragment() {
         }
 
         viewModel.ingredients.observe(viewLifecycleOwner) { ingredients ->
-            binding.chipGroupIngredients.removeAllViews()
-            ingredients.forEach { ingredient ->
-                val chip = Chip(context).apply {
-                    text = ingredient.name
-                    isCheckable = true
-                    tag = ingredient.ingredient_id
-                }
-                binding.chipGroupIngredients.addView(chip)
-            }
+
         }
 
         binding.chipGroupIngredients.setOnCheckedStateChangeListener { group, checkedIds ->
@@ -160,7 +152,6 @@ class RecipeListFragment : Fragment() {
 
 
     private fun setupObservers() {
-
         viewModel.recipes.observe(viewLifecycleOwner) { recipes ->
             recipeAdapter = RecipeAdapter(recipes) { recipe ->
                 navigateToRecipeDetails(recipe)
@@ -171,12 +162,28 @@ class RecipeListFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            if (!isLoading) {
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            loadInitialData()
+        }
+
+        binding.swipeRefreshLayout.setColorSchemeResources(
+            R.color.primary,
+            R.color.primary_dark,
+            R.color.accent
+        )
     }
 
+
     private fun loadInitialData() {
+        binding.swipeRefreshLayout.isRefreshing = true
         viewModel.loadRecipes()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

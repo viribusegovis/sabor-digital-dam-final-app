@@ -1,90 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@color/surface"
-        android:queryHint="@string/search_hint"
-        app:iconTint="@color/primary"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
-    <HorizontalScrollView
-        android:id="@+id/categoryFilterScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/surface"
-        app:layout_constraintTop_toBottomOf="@id/searchView">
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/surface"
+            android:queryHint="@string/search_hint"
+            app:iconTint="@color/primary"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupCategories"
+        <HorizontalScrollView
+            android:id="@+id/categoryFilterScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/surface"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:chipBackgroundColor="@color/primary_light"
+                app:chipSpacingHorizontal="4dp"
+                app:chipStrokeColor="@color/primary"
+                app:chipStrokeWidth="1dp"
+                app:singleSelection="true" />
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/ingredientFilterScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/surface"
+            app:layout_constraintTop_toBottomOf="@id/categoryFilterScrollView">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupIngredients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:chipBackgroundColor="@color/primary_light"
+                app:chipSpacingHorizontal="4dp"
+                app:chipStrokeColor="@color/primary"
+                app:chipStrokeWidth="1dp"
+                app:singleSelection="true" />
+        </HorizontalScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/background"
+            android:clipToPadding="false"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredientFilterScrollView" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            app:chipBackgroundColor="@color/primary_light"
-            app:chipSpacingHorizontal="4dp"
-            app:chipStrokeColor="@color/primary"
-            app:chipStrokeWidth="1dp"
-            app:singleSelection="true" />
-    </HorizontalScrollView>
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintBottom_toBottomOf="@id/recipesRecyclerView"
+            app:layout_constraintEnd_toEndOf="@id/recipesRecyclerView"
+            app:layout_constraintStart_toStartOf="@id/recipesRecyclerView"
+            app:layout_constraintTop_toTopOf="@id/recipesRecyclerView" />
 
-    <HorizontalScrollView
-        android:id="@+id/ingredientFilterScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/surface"
-        app:layout_constraintTop_toBottomOf="@id/categoryFilterScrollView">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupIngredients"
+        <TextView
+            android:id="@+id/emptyStateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            app:chipBackgroundColor="@color/primary_light"
-            app:chipSpacingHorizontal="4dp"
-            app:chipStrokeColor="@color/primary"
-            app:chipStrokeWidth="1dp"
-            app:singleSelection="true" />
-    </HorizontalScrollView>
+            android:text="@string/no_recipes_found"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/recipesRecyclerView"
+            app:layout_constraintEnd_toEndOf="@id/recipesRecyclerView"
+            app:layout_constraintStart_toStartOf="@id/recipesRecyclerView"
+            app:layout_constraintTop_toTopOf="@id/recipesRecyclerView" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:clipToPadding="false"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredientFilterScrollView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/primary"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/recipesRecyclerView"
-        app:layout_constraintEnd_toEndOf="@id/recipesRecyclerView"
-        app:layout_constraintStart_toStartOf="@id/recipesRecyclerView"
-        app:layout_constraintTop_toTopOf="@id/recipesRecyclerView" />
-
-    <TextView
-        android:id="@+id/emptyStateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/no_recipes_found"
-        android:textColor="@color/text_secondary"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/recipesRecyclerView"
-        app:layout_constraintEnd_toEndOf="@id/recipesRecyclerView"
-        app:layout_constraintStart_toStartOf="@id/recipesRecyclerView"
-        app:layout_constraintTop_toTopOf="@id/recipesRecyclerView" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

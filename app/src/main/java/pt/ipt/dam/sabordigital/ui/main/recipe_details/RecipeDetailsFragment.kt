@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import pt.ipt.dam.sabordigital.R
+import pt.ipt.dam.sabordigital.data.remote.models.IngredientListItem
 import pt.ipt.dam.sabordigital.databinding.FragmentRecipeDetailsBinding
+import pt.ipt.dam.sabordigital.utils.IngredientAdapter
 
 class RecipeDetailsFragment : Fragment() {
     private var _binding: FragmentRecipeDetailsBinding? = null
@@ -62,9 +65,18 @@ class RecipeDetailsFragment : Fragment() {
 
         }
 
-        viewModel.ingredients.observe(viewLifecycleOwner) { ingredients ->
-            // TODO: Setup ingredients adapter
+        viewModel.ingredients.observe(viewLifecycleOwner) { recipeIngredients ->
+            binding.ingredientsRecyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = IngredientAdapter(
+                    recipeIngredients.map { IngredientListItem.RecipeIngredient(it) }
+                ) { ingredient ->
+                    // Empty lambda since we don't need click handling in details
+                }
+            }
         }
+
+
 
         viewModel.instructions.observe(viewLifecycleOwner) { instructions ->
             // TODO: Setup instructions adapter

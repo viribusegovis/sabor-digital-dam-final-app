@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pt.ipt.dam.sabordigital.data.remote.models.Ingredient
 import pt.ipt.dam.sabordigital.data.remote.models.Instruction
 import pt.ipt.dam.sabordigital.data.remote.models.Recipe
+import pt.ipt.dam.sabordigital.data.remote.models.RecipeIngredient
 import pt.ipt.dam.sabordigital.data.retrofit.RetrofitInitializer
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,8 +17,8 @@ class RecipeDetailsViewModel : ViewModel() {
     private val _recipe = MutableLiveData<Recipe>()
     val recipe: LiveData<Recipe> = _recipe
 
-    private val _ingredients = MutableLiveData<List<Ingredient>>()
-    val ingredients: LiveData<List<Ingredient>> = _ingredients
+    private val _ingredients = MutableLiveData<List<RecipeIngredient>>()
+    val ingredients: LiveData<List<RecipeIngredient>> = _ingredients
 
     private val _instructions = MutableLiveData<List<Instruction>>()
     val instructions: LiveData<List<Instruction>> = _instructions
@@ -56,17 +56,17 @@ class RecipeDetailsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 RetrofitInitializer().recipeService().getRecipeIngredients(recipeId)
-                    .enqueue(object : Callback<List<Ingredient>> {
+                    .enqueue(object : Callback<List<RecipeIngredient>> {
                         override fun onResponse(
-                            call: Call<List<Ingredient>>,
-                            response: Response<List<Ingredient>>
+                            call: Call<List<RecipeIngredient>>,
+                            response: Response<List<RecipeIngredient>>
                         ) {
                             if (response.isSuccessful) {
                                 _ingredients.value = response.body()
                             }
                         }
 
-                        override fun onFailure(call: Call<List<Ingredient>>, t: Throwable) {
+                        override fun onFailure(call: Call<List<RecipeIngredient>>, t: Throwable) {
                             // Handle error
                         }
                     })

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import pt.ipt.dam.sabordigital.R
+import pt.ipt.dam.sabordigital.data.remote.models.IngredientListItem
 import pt.ipt.dam.sabordigital.databinding.FragmentHomeBinding
 import pt.ipt.dam.sabordigital.ui.main.re.RecipeListFragment
 import pt.ipt.dam.sabordigital.utils.CategoryAdapter
@@ -64,7 +65,9 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.ingredients.observe(viewLifecycleOwner) { ingredients ->
-            binding.ingredientsRecyclerView.adapter = IngredientAdapter(ingredients) { ingredient ->
+            binding.ingredientsRecyclerView.adapter = IngredientAdapter(
+                items = ingredients.map { IngredientListItem.IngredientOnly(it) }
+            ) { ingredient ->
                 // Navigate to RecipeListFragment with ingredient filter
                 val fragment = RecipeListFragment().apply {
                     arguments = Bundle().apply {
@@ -79,17 +82,35 @@ class HomeFragment : Fragment() {
             }
         }
 
+
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            if (!isLoading) {
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            loadData()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
+        binding.swipeRefreshLayout.setColorSchemeResources(
+            R.color.primary,
+            R.color.primary_dark,
+            R.color.accent
+        )
+
     }
 
     private fun loadData() {
         context?.let {
+            binding.swipeRefreshLayout.isRefreshing = true
             viewModel.fetchCategories(it)
             viewModel.fetchPopularIngredients(it)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
