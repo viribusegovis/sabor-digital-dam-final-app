@@ -58,8 +58,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
-<<<<<<< HEAD
-=======
 
     // Retrofit
     implementation(libs.retrofit)
@@ -72,7 +70,6 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.compiler)
 
->>>>>>> 0a8ebccb9fcda26c42f6e5b66cadc6067c31e9d1
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

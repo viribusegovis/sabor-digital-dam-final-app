@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<<<<<<< HEAD
-    <style name="Theme.SaborDigital" parent="android:Theme.Material.Light.NoActionBar" />
-=======
     <style name="Theme.MyTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
@@ -19,5 +16,4 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent.SquareFAB
         </item>
     </style>
->>>>>>> 0a8ebccb9fcda26c42f6e5b66cadc6067c31e9d1
 </resources>

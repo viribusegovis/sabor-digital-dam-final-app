@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomeFragment">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
-
-</FrameLayout>
-=======
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-=======
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeRefreshLayout"
->>>>>>> feature/recipe-details
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
@@ -34,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Ingredientes Populares"
+            android:text="@string/ingredientes_populares"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/text_primary" />
 
@@ -46,10 +28,6 @@
             android:clipToPadding="false"
             android:orientation="horizontal" />
 
-<<<<<<< HEAD
-</LinearLayout>
->>>>>>> 0a8ebccb9fcda26c42f6e5b66cadc6067c31e9d1
-=======
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -62,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Categorias"
+            android:text="@string/categorias"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/text_primary" />
 
@@ -91,4 +69,3 @@
     </LinearLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
->>>>>>> feature/recipe-details

@@ -2,12 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-<<<<<<< HEAD
-=======
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
->>>>>>> 0a8ebccb9fcda26c42f6e5b66cadc6067c31e9d1
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,18 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
 
         android:supportsRtl="true"
-<<<<<<< HEAD
-        android:theme="@style/Theme.SaborDigital"
-        tools:targetApi="31">
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.SaborDigital">
-=======
         android:theme="@style/Theme.MyTheme"
 
         android:usesCleartextTraffic="true"
@@ -45,7 +30,6 @@
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyTheme">
->>>>>>> 0a8ebccb9fcda26c42f6e5b66cadc6067c31e9d1
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
