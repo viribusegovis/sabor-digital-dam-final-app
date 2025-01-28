@@ -134,7 +134,15 @@ class RecipeListFragment : Fragment() {
         }
 
         viewModel.ingredients.observe(viewLifecycleOwner) { ingredients ->
-
+            binding.chipGroupIngredients.removeAllViews()
+            ingredients.forEach { ingredient ->
+                val chip = Chip(context).apply {
+                    text = ingredient.name
+                    isCheckable = true
+                    tag = ingredient.ingredient_id
+                }
+                binding.chipGroupIngredients.addView(chip)
+            }
         }
 
         binding.chipGroupIngredients.setOnCheckedStateChangeListener { group, checkedIds ->

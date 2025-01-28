@@ -160,7 +160,7 @@ class RecipeListViewModel : ViewModel() {
         _loading.value = true
         viewModelScope.launch {
             try {
-                RetrofitInitializer().ingredientService().getTop10Ingredients(30)
+                RetrofitInitializer().ingredientService().getTopIngredients(30)
                     .enqueue(object : Callback<List<Ingredient>> {
                         override fun onResponse(
                             call: Call<List<Ingredient>>,
