@@ -1,4 +1,42 @@
 <resources>
     <string name="app_name">Sabor Digital</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+<<<<<<< HEAD
+=======
+    <string name="field_name">Nome</string>
+    <string name="field_email">Email</string>
+    <string name="field_password">Password</string>
+    <string name="button_login">Iniciar Sessão</string>
+    <string name="button_register">Registar</string>
+    <string name="link_register">Não tem conta?</string>
+    <string name="button_logout">Terminar Sessão</string>
+    <string name="app_logo">Logótipo da aplicação\n</string>
+    <string name="link_login">Já tem conta? Faça login</string>
+    <string name="desc_ingredient">Ingredient logo</string>
+    <!-- Recipe Difficulties -->
+    <string name="difficulty_easy">★☆☆</string>
+    <string name="difficulty_medium">★★☆</string>
+    <string name="difficulty_hard">★★★</string>
+    <string name="difficulty_unknown">Desconhecido</string>
+
+    <!-- Recipe List Item -->
+    <string name="recipe_prep_time_format">%d min</string>
+    <string name="recipe_servings_format">%d pessoas</string>
+
+    <!-- Categories -->
+    <string name="category_main_dishes">Pratos Principais</string>
+    <string name="category_desserts">Sobremesas</string>
+    <string name="category_soups">Sopas</string>
+    <string name="category_starters">Entradas</string>
+    <string name="category_vegetarian">Vegetariano</string>
+
+    <!-- Search and Filters -->
+    <string name="search_hint">Procurar receitas</string>
+    <string name="filter_by_category">Filtrar por categoria</string>
+    <string name="filter_by_difficulty">Filtrar por dificuldade</string>
+
+    <!-- Empty States -->
+    <string name="no_recipes_found">Nenhuma receita encontrada</string>
+    <string name="error_loading_recipes">Erro ao carregar receitas</string>
+>>>>>>> 0a8ebccb9fcda26c42f6e5b66cadc6067c31e9d1
 </resources>
