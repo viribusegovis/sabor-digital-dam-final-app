@@ -11,6 +11,7 @@ import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.data.remote.models.IngredientListItem
 import pt.ipt.dam.sabordigital.databinding.FragmentRecipeDetailsBinding
 import pt.ipt.dam.sabordigital.utils.IngredientAdapter
+import pt.ipt.dam.sabordigital.utils.InstructionAdapter
 
 class RecipeDetailsFragment : Fragment() {
     private var _binding: FragmentRecipeDetailsBinding? = null
@@ -76,11 +77,13 @@ class RecipeDetailsFragment : Fragment() {
             }
         }
 
-
-
         viewModel.instructions.observe(viewLifecycleOwner) { instructions ->
-            // TODO: Setup instructions adapter
+            binding.instructionsRecyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = InstructionAdapter(instructions)
+            }
         }
+
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
