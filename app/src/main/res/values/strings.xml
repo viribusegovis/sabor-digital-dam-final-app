@@ -29,7 +29,7 @@
     <string name="category_vegetarian">Vegetariano</string>
 
     <!-- Search and Filters -->
-    <string name="search_hint">Procurar receitas</string>
+    <string name="search_hint">Procurar receitas…</string>
     <string name="filter_by_category">Filtrar por categoria</string>
     <string name="filter_by_difficulty">Filtrar por dificuldade</string>
 

@@ -26,6 +26,31 @@ class RecipeListViewModel : ViewModel() {
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
+    private var currentCategoryId: Int? = null
+    private var currentIngredientId: Int? = null
+    private var currentSearchQuery: String? = null
+
+    // Add getters for the current state
+    fun getCurrentCategoryId() = currentCategoryId
+    fun getCurrentIngredientId() = currentIngredientId
+
+
+    fun refreshWithCurrentFilters() {
+        when {
+            currentCategoryId != null -> filterByCategory(currentCategoryId!!)
+            currentIngredientId != null -> filterByIngredient(currentIngredientId!!)
+            currentSearchQuery != null -> searchRecipes(currentSearchQuery!!)
+            else -> return
+        }
+    }
+
+    fun hasFilters(): Boolean {
+        if (currentCategoryId != null || currentIngredientId != null || currentSearchQuery != null) {
+            return true
+        }
+        return false
+    }
+
     fun loadRecipes() {
         _loading.value = true
         viewModelScope.launch {
@@ -53,6 +78,9 @@ class RecipeListViewModel : ViewModel() {
     }
 
     fun searchRecipes(query: String) {
+        currentSearchQuery = query
+        currentCategoryId = null
+        currentIngredientId = null
         _loading.value = true
         viewModelScope.launch {
             try {
@@ -79,6 +107,9 @@ class RecipeListViewModel : ViewModel() {
     }
 
     fun filterByCategory(categoryId: Int) {
+        currentCategoryId = categoryId
+        currentIngredientId = null
+        currentSearchQuery = null
         _loading.value = true
         viewModelScope.launch {
             try {
@@ -105,6 +136,9 @@ class RecipeListViewModel : ViewModel() {
     }
 
     fun filterByIngredient(ingredientId: Int) {
+        currentIngredientId = ingredientId
+        currentCategoryId = null
+        currentSearchQuery = null
         _loading.value = true
         viewModelScope.launch {
             try {
@@ -184,6 +218,9 @@ class RecipeListViewModel : ViewModel() {
 
 
     fun clearFilters() {
+        currentCategoryId = null
+        currentIngredientId = null
+        currentSearchQuery = null
         loadRecipes()
     }
 }

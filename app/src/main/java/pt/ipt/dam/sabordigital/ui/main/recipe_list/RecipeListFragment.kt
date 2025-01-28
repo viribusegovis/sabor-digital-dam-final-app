@@ -38,26 +38,29 @@ class RecipeListFragment : Fragment() {
         setupFilters()
         setupObservers()
         handleArguments()
-        viewModel.loadCategories()
-        viewModel.loadIngredients()
     }
 
     private fun handleArguments() {
-        arguments?.let { bundle ->
-            when {
-                bundle.containsKey("category_id") -> {
-                    val categoryId = bundle.getInt("category_id")
-                    viewModel.filterByCategory(categoryId)
-                }
+        viewModel.loadCategories()
+        viewModel.loadIngredients()
+        if (viewModel.hasFilters()) {
+            viewModel.refreshWithCurrentFilters()
+        } else {
+            arguments?.let { bundle ->
+                when {
+                    bundle.containsKey("category_id") -> {
+                        val categoryId = bundle.getInt("category_id")
+                        viewModel.filterByCategory(categoryId)
+                    }
 
-                bundle.containsKey("ingredient_id") -> {
-                    val ingredientId = bundle.getInt("ingredient_id")
-                    viewModel.filterByIngredient(ingredientId)
+                    bundle.containsKey("ingredient_id") -> {
+                        val ingredientId = bundle.getInt("ingredient_id")
+                        viewModel.filterByIngredient(ingredientId)
+                    }
                 }
+            } ?: viewModel.refreshWithCurrentFilters()
+        }
 
-                else -> loadInitialData()
-            }
-        } ?: loadInitialData()
     }
 
     private fun setupRecyclerView() {
@@ -99,8 +102,16 @@ class RecipeListFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText.isNullOrBlank()) {
-                        loadInitialData()
+                    if (hasFocus()) { // Only handle user-initiated changes
+                        when {
+                            newText.isNullOrBlank() -> {
+                                viewModel.loadRecipes()
+                                binding.chipGroupCategories.clearCheck()
+                                binding.chipGroupIngredients.clearCheck()
+                            }
+
+                            else -> viewModel.searchRecipes(newText)
+                        }
                     }
                     return true
                 }
@@ -116,20 +127,26 @@ class RecipeListFragment : Fragment() {
                     text = category.name
                     isCheckable = true
                     tag = category.category_id
+                    isChecked = category.category_id == viewModel.getCurrentCategoryId()
+
                 }
                 binding.chipGroupCategories.addView(chip)
             }
         }
 
         binding.chipGroupCategories.setOnCheckedStateChangeListener { group, checkedIds ->
-            binding.chipGroupIngredients.clearCheck()
-
-            if (checkedIds.isEmpty()) {
-                loadInitialData()
-            } else {
+            if (checkedIds.isNotEmpty()) {
+                // Clear ingredients only when actively selecting a category
+                binding.chipGroupIngredients.post {
+                    binding.chipGroupIngredients.clearCheck()
+                }
                 val chip = group.findViewById<Chip>(checkedIds.first())
-                val category_id = chip.tag as Int
-                viewModel.filterByCategory(category_id)
+                viewModel.filterByCategory(chip.tag as Int)
+            } else {
+                // Only clear if there was an active category filter
+                if (viewModel.getCurrentCategoryId() != null) {
+                    viewModel.clearFilters()
+                }
             }
         }
 
@@ -140,20 +157,26 @@ class RecipeListFragment : Fragment() {
                     text = ingredient.name
                     isCheckable = true
                     tag = ingredient.ingredient_id
+                    isChecked = ingredient.ingredient_id == viewModel.getCurrentIngredientId()
+
                 }
                 binding.chipGroupIngredients.addView(chip)
             }
         }
 
         binding.chipGroupIngredients.setOnCheckedStateChangeListener { group, checkedIds ->
-            binding.chipGroupCategories.clearCheck()
-
-            if (checkedIds.isEmpty()) {
-                loadInitialData()
-            } else {
+            if (checkedIds.isNotEmpty()) {
+                // Clear categories only when actively selecting an ingredient
+                binding.chipGroupCategories.post {
+                    binding.chipGroupCategories.clearCheck()
+                }
                 val chip = group.findViewById<Chip>(checkedIds.first())
-                val ingredient_id = chip.tag as Int
-                viewModel.filterByIngredient(ingredient_id)
+                viewModel.filterByIngredient(chip.tag as Int)
+            } else {
+                // Only clear if there was an active ingredient filter
+                if (viewModel.getCurrentIngredientId() != null) {
+                    viewModel.clearFilters()
+                }
             }
         }
     }
@@ -176,7 +199,8 @@ class RecipeListFragment : Fragment() {
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            loadInitialData()
+            binding.swipeRefreshLayout.isRefreshing = true
+            viewModel.refreshWithCurrentFilters()
         }
 
         binding.swipeRefreshLayout.setColorSchemeResources(
@@ -185,13 +209,6 @@ class RecipeListFragment : Fragment() {
             R.color.accent
         )
     }
-
-
-    private fun loadInitialData() {
-        binding.swipeRefreshLayout.isRefreshing = true
-        viewModel.loadRecipes()
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

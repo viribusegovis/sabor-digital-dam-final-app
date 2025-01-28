@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Cores Principais -->
-    <color name="primary">#6200EE</color>
-    <color name="primary_dark">#3700B3</color>
-    <color name="primary_light">#BB86FC</color>
-    <color name="accent">#6200EE</color>
+    <!-- Primary Colors -->
+    <color name="primary">#6750A4</color>  <!-- M3 Primary Purple -->
+    <color name="primary_dark">#4F378B</color>
+    <color name="primary_light">#EADDFF</color>
+    <color name="accent">#03DAC6</color>   <!-- High-contrast Teal -->
 
-    <!-- Cores de Estado -->
-    <color name="error">#B00020</color>
-    <color name="success">#03DAC5</color>
-    <color name="warning">#FFB300</color>
+    <!-- Status Colors -->
+    <color name="error">#B00020</color>    <!-- Standard Error Red -->
+    <color name="success">#00C853</color>  <!-- Vibrant Green -->
+    <color name="warning">#FF6D00</color>  <!-- Amber Orange -->
 
-    <!-- Cores de Texto -->
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
-    <color name="text_hint">#BDBDBD</color>
+    <!-- Text Colors (Improved Contrast) -->
+    <color name="text_primary">#1A1A1A</color>    <!-- 87% Black -->
+    <color name="text_secondary">#5E5E5E</color> <!-- 60% Black -->
+    <color name="text_hint">#9E9E9E</color>       <!-- 38% Black -->
 
-    <!-- Cores de Fundo -->
-    <color name="background">#FFFFFF</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="card_background">#F5F5F5</color>
+    <!-- Background Colors -->
+    <color name="background">#FEFBFF</color>     <!-- Soft White -->
+    <color name="surface">#FFFFFF</color>        <!-- Pure White -->
+    <color name="card_background">#F3EDF7</color><!-- Light Purple Tint -->
 
-    <!-- Cores de Estado de Botões -->
-    <color name="button_disabled">#DFDFDF</color>
-    <color name="button_pressed">#5000CE</color>
+    <!-- Button States -->
+    <color name="button_disabled">#E0E0E0</color>
+    <color name="button_pressed">#4F378B</color> <!-- Primary Dark -->
 
-    <!-- Cores de Dificuldade -->
-    <color name="difficulty_easy">#03DAC5</color>
-    <color name="difficulty_medium">#FFB300</color>
-    <color name="difficulty_hard">#B00020</color>
+    <!-- Difficulty Levels -->
+    <color name="difficulty_easy">#4CAF50</color> <!-- Green -->
+    <color name="difficulty_medium">#FF9800</color> <!-- Orange -->
+    <color name="difficulty_hard">#E53935</color> <!-- Red -->
+
+    <!-- Additional Accessibility Colors -->
+    <color name="on_primary">#FFFFFF</color>      <!-- White text on primary -->
+    <color name="on_error">#FFFFFF</color>        <!-- White text on error -->
+    <color name="on_success">#000000</color>      <!-- Black text on success -->
 </resources>
