@@ -80,11 +80,10 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, RecipeCreationFragment())
                 .commit()
-            true
         }
 
     }
-    
+
     fun hideMainFab() {
         binding.addRecipeFab.hide()
     }

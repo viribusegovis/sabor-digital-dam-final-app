@@ -40,6 +40,7 @@ class RecipeDetailsFragment : Fragment() {
 
             // Load recipe image
             if (!recipe.imageUrl.isNullOrEmpty()) {
+                // TODO: Finish this
                 /*Glide.with(requireContext())
                     .load(recipe.imageUrl)
                     .centerCrop()

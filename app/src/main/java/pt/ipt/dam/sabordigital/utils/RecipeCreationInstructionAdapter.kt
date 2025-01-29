@@ -1,5 +1,6 @@
 package pt.ipt.dam.sabordigital.utils
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
@@ -20,6 +21,7 @@ class RecipeCreationInstructionAdapter :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val instruction = instructions[position]
         holder.binding.apply {

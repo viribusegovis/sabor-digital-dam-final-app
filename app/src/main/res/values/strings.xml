@@ -52,7 +52,7 @@
     <string name="description">Descrição</string>
     <string name="servings">Nº de Porções</string>
     <string name="difficulty">Dificuldade</string>
-    <string name="create_recipe">Criar Receita</string>
+    <string name="create_recipe">Criar Nova Receita</string>
     <string name="add_ingredient">Adicionar Ingrediente</string>
     <string name="add_step">Adicionar passo</string>
     <string name="category">Categoria</string>
@@ -66,4 +66,7 @@
     <string name="remove_ingredient">Remover Passo</string>
     <string name="error_required_field">Campo obrigatório!</string>
     <string name="category_name">Categoria</string>
+    <string name="home">Inicio</string>
+    <string name="search">Pesquisa</string>
+    <string name="profile">Perfil</string>
 </resources>
