@@ -48,9 +48,9 @@ class RecipeDetailsFragment : Fragment() {
 
             // Set chips information
             binding.difficultyChip.text = when (recipe.difficulty) {
-                "FACIL" -> getString(R.string.difficulty_easy)
-                "MEDIO" -> getString(R.string.difficulty_medium)
-                "DIFICIL" -> getString(R.string.difficulty_hard)
+                "FACIL" -> getString(R.string.stars_easy)
+                "MEDIO" -> getString(R.string.stars_medium)
+                "DIFICIL" -> getString(R.string.stars_hard)
                 else -> getString(R.string.difficulty_unknown)
             }
 

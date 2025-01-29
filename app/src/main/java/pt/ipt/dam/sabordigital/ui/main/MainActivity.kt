@@ -1,32 +1,26 @@
 package pt.ipt.dam.sabordigital.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.databinding.ActivityMainBinding
-import pt.ipt.dam.sabordigital.databinding.NavigationLayoutBinding
-import pt.ipt.dam.sabordigital.ui.auth.login.LoginActivity
-import pt.ipt.dam.sabordigital.ui.auth.register.RegisterActivity
+import pt.ipt.dam.sabordigital.ui.main.re.RecipeListFragment
+import pt.ipt.dam.sabordigital.ui.main.recipe_create.RecipeCreationFragment
 import pt.ipt.dam.sabordigital.ui.main.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navigationBinding: NavigationLayoutBinding
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        drawerLayout = binding.drawerLayout
-        navigationBinding =
-            NavigationLayoutBinding.bind(binding.root.findViewById(R.id.navigationLayout))
+
         setContentView(binding.root)
 
         viewModel.checkAuthState(binding.root.context)
@@ -38,45 +32,66 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, HomeFragment())
                 .commit()
         }
+
+
     }
 
     private fun setupObservers() {
         viewModel.authState.observe(this) { isAuthenticated ->
-            updateAuthButtons(isAuthenticated)
-        }
-    }
-
-    private fun updateAuthButtons(isAuthenticated: Boolean) {
-        navigationBinding.apply {
-            loginButton.visibility = if (isAuthenticated) View.GONE else View.VISIBLE
-            registerButton.visibility = if (isAuthenticated) View.GONE else View.VISIBLE
-            logoutButton.visibility = if (isAuthenticated) View.VISIBLE else View.GONE
+            //updateAuthButtons(isAuthenticated)
         }
     }
 
     private fun setupNavigationDrawer() {
-        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
-        navigationBinding.loginButton.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-            drawerLayout.closeDrawer(GravityCompat.START)
+        // Access through main binding
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, HomeFragment())
+                        .commit()
+                    true
+                }
+
+                R.id.nav_search -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, RecipeListFragment())
+                        .commit()
+                    true
+                }
+
+                /*
+                * R.id.nav_profile -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, ProfileFragment())
+                        .commit()
+                    true
+                }
+                * */
+
+                else -> false
+            }
         }
 
-        navigationBinding.registerButton.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-            drawerLayout.closeDrawer(GravityCompat.START)
+        binding.addRecipeFab.setOnClickListener() {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, RecipeCreationFragment())
+                .commit()
+            true
         }
 
-        navigationBinding.logoutButton.setOnClickListener {
-            viewModel.logout(this)
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
+    }
+    
+    fun hideMainFab() {
+        binding.addRecipeFab.hide()
     }
 
+    fun showMainFab() {
+        binding.addRecipeFab.show()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {

@@ -64,8 +64,6 @@ dependencies {
     implementation(libs.converter.gson)
     // Gson
     implementation(libs.gson)
-    //Google Material
-    implementation(libs.material.v1110)
     //Glide
     implementation(libs.glide)
     annotationProcessor(libs.compiler)

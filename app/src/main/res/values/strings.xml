@@ -12,9 +12,12 @@
     <string name="link_login">Já tem conta? Faça login</string>
     <string name="desc_ingredient">Ingredient logo</string>
     <!-- Recipe Difficulties -->
-    <string name="difficulty_easy">★☆☆</string>
-    <string name="difficulty_medium">★★☆</string>
-    <string name="difficulty_hard">★★★</string>
+    <string name="difficulty_easy">Fácil</string>
+    <string name="difficulty_medium">Médio</string>
+    <string name="difficulty_hard">Difícil</string>
+    <string name="stars_easy">★☆☆</string>
+    <string name="stars_medium">★★☆</string>
+    <string name="stars_hard">★★★</string>
     <string name="difficulty_unknown">Desconhecido</string>
 
     <!-- Recipe List Item -->
@@ -40,4 +43,27 @@
     <string name="instructions">Instruções</string>
     <string name="categorias">Categorias</string>
     <string name="ingredientes_populares">Ingredientes Populares</string>
+    <string name="menu_home">Ínicio</string>
+    <string name="menu_search">Pesquisar</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="prep_time_minutes">Tempo de preparação</string>
+    <string name="add_image">Adicionar Imagem</string>
+    <string name="title">Titulo</string>
+    <string name="description">Descrição</string>
+    <string name="servings">Nº de Porções</string>
+    <string name="difficulty">Dificuldade</string>
+    <string name="create_recipe">Criar Receita</string>
+    <string name="add_ingredient">Adicionar Ingrediente</string>
+    <string name="add_step">Adicionar passo</string>
+    <string name="category">Categoria</string>
+    <string name="recipe_image">Imagem</string>
+    <string name="add_category">Adicionar Categoria</string>
+    <string name="ingredient">Ingrediente</string>
+    <string name="amount">Quantidade\n</string>
+    <string name="unit">Unidade</string>
+    <string name="ingredient_name">Nome</string>
+    <string name="remove_step">Remover Passo</string>
+    <string name="remove_ingredient">Remover Passo</string>
+    <string name="error_required_field">Campo obrigatório!</string>
+    <string name="category_name">Categoria</string>
 </resources>

@@ -29,9 +29,9 @@ class RecipeAdapter(
             descriptionText.text = recipe.description
 
             difficultyChip.text = when (recipe.difficulty) {
-                "FACIL" -> root.context.getString(R.string.difficulty_easy)
-                "MEDIO" -> root.context.getString(R.string.difficulty_medium)
-                "DIFICIL" -> root.context.getString(R.string.difficulty_hard)
+                "FACIL" -> root.context.getString(R.string.stars_easy)
+                "MEDIO" -> root.context.getString(R.string.stars_medium)
+                "DIFICIL" -> root.context.getString(R.string.stars_hard)
                 else -> root.context.getString(R.string.difficulty_unknown)
             }
 
