@@ -54,6 +54,11 @@ class RecipeCreationInstructionAdapter :
 
     fun validateAllInstructions(): Boolean {
         var isValid = true
+        if (instructions.isEmpty()) {
+            isValid = false
+        }
+
+
         instructions.forEachIndexed { index, instruction ->
             val instructionValid = instruction.isNotBlank()
             validateInstruction(index, instructionValid)

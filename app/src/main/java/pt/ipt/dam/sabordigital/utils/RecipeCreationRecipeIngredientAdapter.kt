@@ -168,6 +168,10 @@ class RecipeCreationRecipeIngredientAdapter :
 
     fun validateAllIngredients(): Boolean {
         var isValid = true
+        if (recipeIngredients.isEmpty()) {
+            isValid = false
+        }
+
         recipeIngredients.forEachIndexed { index, ingredient ->
             val amountValid = ingredient.amount != null
             val unitValid = !ingredient.unit.isNullOrBlank()
