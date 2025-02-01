@@ -1,6 +1,7 @@
 package pt.ipt.dam.sabordigital.ui.main.recipe_create
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -19,6 +20,7 @@ import pt.ipt.dam.sabordigital.databinding.FragmentRecipeCreationBinding
 import pt.ipt.dam.sabordigital.ui.main.MainActivity
 import pt.ipt.dam.sabordigital.utils.RecipeCreationInstructionAdapter
 import pt.ipt.dam.sabordigital.utils.RecipeCreationRecipeIngredientAdapter
+import java.util.Locale
 
 class RecipeCreationFragment : Fragment() {
     private var _binding: FragmentRecipeCreationBinding? = null
@@ -68,7 +70,8 @@ class RecipeCreationFragment : Fragment() {
         }
 
         binding.btnAddIngredient.setOnClickListener {
-            ingredientAdapter.addIngredient()
+            // Add an empty RecipeIngredient item
+            ingredientAdapter.showIngredientSearch(requireContext())
         }
 
         binding.btnAddStep.setOnClickListener {
@@ -96,7 +99,7 @@ class RecipeCreationFragment : Fragment() {
             android.R.layout.simple_spinner_dropdown_item,
             difficulties
         )
-        binding.actvDifficulty.inputType = InputType.TYPE_NULL  // Add this line
+        binding.actvDifficulty.inputType = InputType.TYPE_NULL
         binding.actvDifficulty.setAdapter(adapter)
     }
 
@@ -131,7 +134,7 @@ class RecipeCreationFragment : Fragment() {
         binding.btnSubmit.setOnClickListener {
             if (validateForm()) {
                 val recipe = createRecipeFromForm()
-                viewModel.createRecipe(recipe)
+                viewModel.createRecipe(requireContext(), recipe)
             }
         }
     }
@@ -145,6 +148,18 @@ class RecipeCreationFragment : Fragment() {
             isValid = false
         } else {
             binding.tilTitle.error = null
+        }
+
+        val selectedCategories = binding.chipGroupCategories.checkedChipIds.count()
+        // Validate categories
+        if (selectedCategories == 0) {
+            binding.categoryError.apply {
+                text = getString(R.string.error_required_field)
+                visibility = View.VISIBLE
+            }
+            isValid = false
+        } else {
+            binding.categoryError.visibility = View.GONE
         }
 
         // Validate description
@@ -171,19 +186,45 @@ class RecipeCreationFragment : Fragment() {
             binding.tilServings.error = null
         }
 
-        // Validate ingredients
-        if (ingredientAdapter.getIngredients().isEmpty()) {
-            // Show error message for ingredients
+        // Validate difficulty
+        if (binding.actvDifficulty.text.isNullOrBlank()) {
+            binding.tilDifficulty.error = getString(R.string.error_required_field)
             isValid = false
+        } else {
+            binding.tilDifficulty.error = null
+        }
+
+        // Validate ingredients
+        if (!ingredientAdapter.validateAllIngredients()) {
+            binding.ingredientsError.apply {
+                text = getString(R.string.error_required_field)
+                visibility = View.VISIBLE
+            }
+            isValid = false
+        } else {
+            binding.ingredientsError.visibility = View.GONE
         }
 
         // Validate instructions
-        if (instructionAdapter.getInstructions().isEmpty()) {
-            // Show error message for instructions
+        if (!instructionAdapter.validateAllInstructions()) {
+            binding.instructionsError.apply {
+                text = getString(R.string.error_required_field)
+                visibility = View.VISIBLE
+            }
             isValid = false
+        } else {
+            binding.instructionsError.visibility = View.GONE
         }
 
+
+
         return isValid
+    }
+
+    private fun getCurrentUser(): Int {
+        val sharedPrefs = requireActivity().getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+        val user_id = sharedPrefs.getInt("user_id", 0) ?: 0
+        return user_id
     }
 
     private fun createRecipeFromForm(): RecipeCreate {
@@ -193,15 +234,26 @@ class RecipeCreationFragment : Fragment() {
         }
 
         return RecipeCreate(
+            author_id = getCurrentUser(),
             title = binding.etTitle.text.toString(),
             description = binding.etDescription.text.toString(),
             preparation_time = binding.etPrepTime.text.toString().toIntOrNull() ?: 0,
             servings = binding.etServings.text.toString().toIntOrNull() ?: 0,
-            difficulty = binding.actvDifficulty.text.toString(),
+            difficulty = mapDifficulty(binding.actvDifficulty.text.toString()),
             ingredients = ingredientAdapter.getIngredients(),
             instructions = instructionAdapter.getInstructions(),
-            categories = categories
+            categories = categories,
+            image_url = "recipes/teste.png"
         )
+    }
+
+    private fun mapDifficulty(input: String): String {
+        return when (input.trim().uppercase(Locale("PT-PT"))) {
+            "FÁCIL", "FACIL" -> "FACIL"
+            "MEDIO", "MÉDIO" -> "MEDIO"
+            "DIFÍCIL", "DIFIL", "DÍFICIL" -> "DIFICIL"
+            else -> input.uppercase(Locale("PT-PT"))
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

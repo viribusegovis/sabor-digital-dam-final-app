@@ -1,5 +1,6 @@
 package pt.ipt.dam.sabordigital.ui.main.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,12 +30,23 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupWelcomeMessage()
         setupRecyclerViews()
         setupObservers()
         loadData()
     }
+
+    private fun setupWelcomeMessage() {
+        val sharedPrefs = requireActivity().getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+        val userName = sharedPrefs.getString("user_name", "") ?: ""
+
+        binding.welcomeText.text =
+            getString(R.string.welcome_message, userName)
+    }
+
 
     private fun setupRecyclerViews() {
         binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(

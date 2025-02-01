@@ -81,13 +81,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnAddCategory"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                    <TextView
+                        android:id="@+id/categoryError"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/add_category"
-                        app:icon="@drawable/ic_add" />
+                        android:layout_marginTop="4dp"
+                        android:textColor="?attr/colorError"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -201,6 +202,17 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/tvIngredients" />
 
+            <TextView
+                android:id="@+id/ingredientsError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="?attr/colorError"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvIngredients" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddIngredient"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -209,7 +221,7 @@
                 android:text="@string/add_ingredient"
                 app:icon="@drawable/ic_add"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvIngredients" />
+                app:layout_constraintTop_toBottomOf="@id/ingredientsError" />
 
             <!-- Instructions Section -->
             <TextView
@@ -226,6 +238,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/tvInstructions" />
+
+            <TextView
+                android:id="@+id/instructionsError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="?attr/colorError"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvInstructions" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddStep"

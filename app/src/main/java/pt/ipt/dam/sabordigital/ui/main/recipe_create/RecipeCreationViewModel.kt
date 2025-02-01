@@ -1,5 +1,6 @@
 package pt.ipt.dam.sabordigital.ui.main.recipe_create
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,6 +28,12 @@ class RecipeCreationViewModel : ViewModel() {
     private val _selectedImage = MutableLiveData<Uri?>()
     val selectedImage: LiveData<Uri?> = _selectedImage
 
+
+    private fun getAuthToken(context: Context): String? {
+        val sharedPrefs = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+        return sharedPrefs.getString("jwt_token", null)
+    }
+
     fun loadCategories() {
         _loading.value = true
         viewModelScope.launch {
@@ -53,11 +60,19 @@ class RecipeCreationViewModel : ViewModel() {
         }
     }
 
-    fun createRecipe(recipe: RecipeCreate) {
+    fun createRecipe(context: Context, recipe: RecipeCreate) {
         _loading.value = true
+        val token = getAuthToken(context)
+        if (token == null) {
+            // Handle unauthorized state
+            return
+        }
         viewModelScope.launch {
             try {
-                RetrofitInitializer().recipeService().createRecipe(recipe)
+                RetrofitInitializer().recipeService().createRecipe(
+                    "$token",
+                    recipe
+                )
                     .enqueue(object : Callback<RecipeCreate> {
                         override fun onResponse(
                             call: Call<RecipeCreate>,

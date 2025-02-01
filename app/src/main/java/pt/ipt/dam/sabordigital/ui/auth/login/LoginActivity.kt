@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import pt.ipt.dam.sabordigital.data.remote.models.TokenResponse
 import pt.ipt.dam.sabordigital.databinding.ActivityLoginBinding
 import pt.ipt.dam.sabordigital.ui.auth.register.RegisterActivity
 import pt.ipt.dam.sabordigital.ui.main.MainActivity
@@ -25,8 +26,8 @@ class LoginActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.loginState.observe(this) { result ->
             result.fold(
-                onSuccess = { token ->
-                    saveToken("Bearer ${token.accessToken}")
+                onSuccess = { tokenResponse ->
+                    saveLoginInfo(tokenResponse)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 },
@@ -68,8 +69,14 @@ class LoginActivity : AppCompatActivity() {
         return true
     }
 
-    private fun saveToken(token: String) {
+    private fun saveLoginInfo(response: TokenResponse) {
         val sharedPrefs = getSharedPreferences("auth_prefs", MODE_PRIVATE)
-        sharedPrefs.edit().putString("jwt_token", token).apply()
+        sharedPrefs.edit()
+            .putString("jwt_token", "${response.tokenType} ${response.accessToken}")
+            .putInt("user_id", response.user.id)
+            .putString("user_name", response.user.name)
+            .putString("user_email", response.user.email)
+            .putString("last_login", response.user.lastLogin)
+            .apply()
     }
 }

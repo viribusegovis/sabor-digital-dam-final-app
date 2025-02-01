@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.checkAuthState(binding.root.context)
         setupNavigationDrawer()
-        setupObservers()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -36,11 +35,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setupObservers() {
-        viewModel.authState.observe(this) { isAuthenticated ->
-            //updateAuthButtons(isAuthenticated)
-        }
-    }
 
     private fun setupNavigationDrawer() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

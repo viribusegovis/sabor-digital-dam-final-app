@@ -69,4 +69,13 @@
     <string name="home">Inicio</string>
     <string name="search">Pesquisa</string>
     <string name="profile">Perfil</string>
+    <string name="welcome_message">Olá %1$s!</string>
+    <string name="error_ingredient_name_required">Nome do ingrediente é obrigatório</string>
+    <string name="error_amount_required">Quantidade é obrigatória</string>
+    <string name="error_unit_required">Unidade é obrigatória</string>
+    <string name="error_instruction_required">A instrução é obrigatória</string>
+    <string name="select_ingredient">Selecionar Ingrediente</string>
+    <string name="search_ingredient">Procurar</string>
+    <string name="cancel">Cancelar</string>
+
 </resources>
