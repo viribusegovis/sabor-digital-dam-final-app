@@ -1,14 +1,22 @@
 package pt.ipt.dam.sabordigital.ui.main.profile
 
 import android.content.Context
+import android.content.Intent
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.data.remote.api.PasswordChange
 import pt.ipt.dam.sabordigital.data.remote.models.User
 import pt.ipt.dam.sabordigital.data.retrofit.RetrofitInitializer
+import pt.ipt.dam.sabordigital.ui.auth.login.LoginActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileViewModel : ViewModel() {
 
@@ -25,10 +33,10 @@ class ProfileViewModel : ViewModel() {
                 val token = getAuthToken(context)
                 if (token != null) {
                     RetrofitInitializer().userService().getUser("$token")
-                        .enqueue(object : retrofit2.Callback<User> {
+                        .enqueue(object : Callback<User> {
                             override fun onResponse(
-                                call: retrofit2.Call<User>,
-                                response: retrofit2.Response<User>
+                                call: Call<User>,
+                                response: Response<User>
                             ) {
                                 if (response.isSuccessful) {
                                     _user.value = response.body()
@@ -36,7 +44,7 @@ class ProfileViewModel : ViewModel() {
                                 _loading.value = false
                             }
 
-                            override fun onFailure(call: retrofit2.Call<User>, t: Throwable) {
+                            override fun onFailure(call: Call<User>, t: Throwable) {
                                 _loading.value = false
                             }
                         })
@@ -65,15 +73,15 @@ class ProfileViewModel : ViewModel() {
                 if (token != null) {
                     RetrofitInitializer().userService()
                         .changePassword("$token", PasswordChange(newPassword))
-                        .enqueue(object : retrofit2.Callback<Void> {
+                        .enqueue(object : Callback<Void> {
                             override fun onResponse(
-                                call: retrofit2.Call<Void>,
-                                response: retrofit2.Response<Void>
+                                call: Call<Void>,
+                                response: Response<Void>
                             ) {
                                 onComplete(response.isSuccessful)
                             }
 
-                            override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
                                 onComplete(false)
                             }
                         })
@@ -84,5 +92,45 @@ class ProfileViewModel : ViewModel() {
                 onComplete(false)
             }
         }
+    }
+
+    private fun navigateToLoginScreen(context: Context) {
+        // Example: Navigate back to login screen after account deletion.
+        // Replace this with your actual navigation logic.
+        val intent = Intent(context, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(context, intent, null)
+    }
+
+    fun deleteAccount(context: Context) {
+
+        val call = getAuthToken(context)?.let {
+            RetrofitInitializer().userService().deleteAccount(
+                it
+            )
+        }
+
+        call?.enqueue(object : Callback<Void> {
+            override fun onResponse(
+                call: Call<Void>,
+                response: Response<Void>
+            ) {
+                Toast.makeText(
+                    context,
+                    R.string.account_deleted,
+                    Toast.LENGTH_SHORT
+                ).show()
+                navigateToLoginScreen(context)
+
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(
+                    context,
+                    R.string.error_deleting_account,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 }

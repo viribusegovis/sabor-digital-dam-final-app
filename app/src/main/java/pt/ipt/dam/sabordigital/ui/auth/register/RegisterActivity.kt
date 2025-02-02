@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import pt.ipt.dam.sabordigital.R
+import pt.ipt.dam.sabordigital.data.remote.models.TokenResponse
 import pt.ipt.dam.sabordigital.databinding.ActivityRegisterBinding
 import pt.ipt.dam.sabordigital.ui.auth.login.LoginActivity
 import pt.ipt.dam.sabordigital.ui.main.MainActivity
@@ -23,15 +25,15 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.registerState.observe(this) { result ->
+        viewModel.loginState.observe(this) { result ->
             result.fold(
-                onSuccess = { token ->
-                    saveToken("Bearer ${token}")
+                onSuccess = { tokenResponse ->
+                    saveLoginInfo(tokenResponse)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 },
                 onFailure = {
-                    Toast.makeText(this, "Erro no registo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -55,27 +57,37 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun validateInputs(name: String, email: String, password: String): Boolean {
-        if (!viewModel.validateCredentials(name, email, password)) {
+        if (!viewModel.validateCredentials(name = name, email = email, password = password)) {
             if (name.isEmpty()) {
-                binding.nameInput.error = "Nome é obrigatório"
+                binding.nameInput.error = getString(R.string.name_required)
             }
             if (email.isEmpty()) {
-                binding.emailInput.error = "Email é obrigatório"
+                binding.emailInput.error = getString(R.string.email_required)
+
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                binding.emailInput.error = "Email inválido"
+                binding.emailInput.error = getString(R.string.email_invalid)
             }
             if (password.isEmpty()) {
-                binding.passwordInput.error = "Password é obrigatória"
+                binding.passwordInput.error = getString(R.string.password_required)
+            }
+            if (password.length < 8) {
+                binding.passwordInput.error = getString(R.string.password_size)
             }
             return false
         }
         return true
     }
 
-    private fun saveToken(token: String) {
+    private fun saveLoginInfo(response: TokenResponse) {
         val sharedPrefs = getSharedPreferences("auth_prefs", MODE_PRIVATE)
-        sharedPrefs.edit().putString("jwt_token", token).apply()
+        sharedPrefs.edit()
+            .putString("jwt_token", "${response.tokenType} ${response.accessToken}")
+            .putInt("user_id", response.user.id)
+            .putString("user_name", response.user.name)
+            .putString("user_email", response.user.email)
+            .putString("last_login", response.user.lastLogin)
+            .apply()
     }
 
 }

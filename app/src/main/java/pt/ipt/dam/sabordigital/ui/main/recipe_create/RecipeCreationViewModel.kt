@@ -1,7 +1,6 @@
 package pt.ipt.dam.sabordigital.ui.main.recipe_create
 
 import android.content.Context
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,8 +24,8 @@ class RecipeCreationViewModel : ViewModel() {
     private val _ingredients = MutableLiveData<List<Ingredient>>()
     val ingredients: LiveData<List<Ingredient>> = _ingredients
 
-    private val _selectedImage = MutableLiveData<Uri?>()
-    val selectedImage: LiveData<Uri?> = _selectedImage
+    private val _selectedImage = MutableLiveData<String?>()
+    val selectedImage: LiveData<String?> = _selectedImage
 
 
     private fun getAuthToken(context: Context): String? {
@@ -91,7 +90,7 @@ class RecipeCreationViewModel : ViewModel() {
         }
     }
 
-    fun setSelectedImage(uri: Uri?) {
-        _selectedImage.value = uri
+    fun setSelectedImage(imageBase64: String?) {
+        _selectedImage.value = imageBase64
     }
 }

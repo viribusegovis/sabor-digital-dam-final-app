@@ -36,23 +36,91 @@
                 app:cardBackgroundColor="@color/surface"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/recipeImage"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mainContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/recipe_image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/placehold" />
+                    android:background="@color/background">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnAddImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="16dp"
-                    android:contentDescription="@string/add_image"
-                    app:srcCompat="@drawable/ic_add_photo"
-                    app:tint="@color/primary" />
+                    <!-- Image Container: visible initially -->
+                    <FrameLayout
+                        android:id="@+id/imageContainer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <!-- Placeholder Recipe Image -->
+                        <ImageView
+                            android:id="@+id/recipeImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/recipe_image"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/placehold" />
+
+                        <!-- Add Image Button (initially visible) -->
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnAddImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_margin="16dp"
+                            android:contentDescription="@string/add_image"
+                            app:srcCompat="@drawable/ic_add_photo" />
+                    </FrameLayout>
+
+                    <!-- Camera Preview Container: initially GONE -->
+                    <FrameLayout
+                        android:id="@+id/cameraPreviewContainer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/imageContainer">
+
+                        <!-- Live Preview using PreviewView -->
+                        <androidx.camera.view.PreviewView
+                            android:id="@+id/previewView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+
+                        <!-- Take Photo Button: centered at bottom -->
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnTakePhoto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginBottom="16dp"
+                            android:contentDescription="@string/take_photo"
+                            app:srcCompat="@drawable/ic_camera" />
+
+                        <!-- Switch Camera Button: bottom-right -->
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnSwitchCamera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="16dp"
+                            android:contentDescription="@string/switch_camera"
+                            app:srcCompat="@drawable/ic_switch_camera" />
+
+                        <!-- Back Button: top-left -->
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnBackFromCamera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|start"
+                            android:layout_margin="16dp"
+                            android:contentDescription="@string/back"
+                            app:srcCompat="@drawable/ic_back" />
+                    </FrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Category Selection -->

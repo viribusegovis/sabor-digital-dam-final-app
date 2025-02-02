@@ -3,20 +3,15 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="@string/home"/>
+        android:title="@string/home" />
 
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/ic_search"
-        android:title="@string/search"/>
-
-    <item
-        android:id="@+id/nav_my_recipes"
-        android:icon="@drawable/ic_recipe_book"
-        android:title="@string/my_recipes"/>
+        android:title="@string/search" />
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_person"
-        android:title="@string/profile"/>
+        android:title="@string/profile" />
 </menu>

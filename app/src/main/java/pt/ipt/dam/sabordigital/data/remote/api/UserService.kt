@@ -5,6 +5,7 @@ import pt.ipt.dam.sabordigital.data.remote.models.UserCreate
 import pt.ipt.dam.sabordigital.data.remote.models.UserResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -28,6 +29,11 @@ interface UserService {
     fun changePassword(
         @Header("Authorization") token: String,
         @Body password: PasswordChange
+    ): Call<Void>
+
+    @DELETE("users/deletion")
+    fun deleteAccount(
+        @Header("Authorization") token: String,
     ): Call<Void>
 
 }

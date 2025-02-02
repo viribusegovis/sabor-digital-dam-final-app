@@ -14,7 +14,6 @@ import retrofit2.Response
 
 class RegisterViewModel : ViewModel() {
     private val _registerState = MutableLiveData<Result<UserResponse>>()
-    val registerState: LiveData<Result<UserResponse>> = _registerState
 
     private val _loginState = MutableLiveData<Result<TokenResponse>>()
     val loginState: LiveData<Result<TokenResponse>> = _loginState
@@ -71,6 +70,10 @@ class RegisterViewModel : ViewModel() {
         }
 
         if (password.isEmpty()) {
+            return false
+        }
+
+        if (password.length < 8) {
             return false
         }
 

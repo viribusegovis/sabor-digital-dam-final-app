@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:text="John Doe"
         android:textColor="@color/text_primary"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -35,7 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="john.doe@example.com"
         android:textColor="@color/text_secondary"
         android:textSize="16sp" />
 
@@ -58,4 +56,14 @@
         android:backgroundTint="@color/card_background"
         android:text="@string/logout_button_text"
         android:textColor="@color/primary" />
+
+    <!-- Action Button: Delete Account -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/error"
+        android:text="@string/delete_account"
+        android:textColor="@color/on_error" />
 </LinearLayout>

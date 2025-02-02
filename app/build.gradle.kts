@@ -66,10 +66,27 @@ dependencies {
     implementation(libs.gson)
     //Glide
     implementation(libs.glide)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
     annotationProcessor(libs.compiler)
 
     implementation(libs.material.v190)
+    // The following line is optional, as the core library is included indirectly by camera-camera2
+    implementation(libs.androidx.camera.core.v133)
+    implementation(libs.androidx.camera.camera2)
+    // If you want to additionally use the CameraX Lifecycle library
+    implementation(libs.androidx.camera.lifecycle.v133)
+    // If you want to additionally use the CameraX VideoCapture library
+    //    implementation "androidx.camera:camera-video:${camerax_version}"
+    // If you want to additionally use the CameraX View class
+    implementation(libs.androidx.camera.view.v133)
+    // If you want to additionally add CameraX ML Kit Vision Integration
+    //       implementation "androidx.camera:camera-mlkit-vision:${camerax_version}"
+    // If you want to additionally use the CameraX Extensions library
+    implementation(libs.androidx.camera.extensions)
 
+    implementation(libs.androidx.exifinterface)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

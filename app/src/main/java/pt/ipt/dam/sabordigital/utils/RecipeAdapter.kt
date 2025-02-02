@@ -45,11 +45,23 @@ class RecipeAdapter(
                 recipe.servings
             )
 
+            // Load recipe image: if imageUrl exists, try to load it.
             if (!recipe.imageUrl.isNullOrEmpty()) {
-                Glide.with(recipeImage.context)
-                    .load(recipe.imageUrl)
-                    .centerCrop()
-                    .into(recipeImage)
+                if (recipe.imageUrl.startsWith("data:") || recipe.imageUrl.length > 500) {
+                    // If Base64-encoded, use our helper function.
+                    ImageHelper.setImageFromBase64(recipeImage, recipe.imageUrl)
+                } else {
+                    // Otherwise, use Glide.
+                    Glide.with(root.context)
+                        .load(recipe.imageUrl)
+                        .centerCrop()
+                        .placeholder(R.drawable.placehold)
+                        .error(R.drawable.placehold)
+                        .into(recipeImage)
+                }
+            } else {
+                // Optionally, set a placeholder if no image URL is provided.
+                recipeImage.setImageResource(R.drawable.placehold)
             }
 
             root.setOnClickListener { onItemClick(recipe) }

@@ -1,5 +1,6 @@
 package pt.ipt.dam.sabordigital.ui.main.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -41,6 +42,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
+
+        setupDeleteAccountButton()
     }
 
     private fun showChangePasswordDialog() {
@@ -89,6 +92,21 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
             .show()
     }
+
+    private fun setupDeleteAccountButton() {
+        binding.btnDeleteAccount.setOnClickListener {
+            // Show a confirmation dialog
+            AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.delete_account))
+                .setMessage(getString(R.string.confirm_delete_account))
+                .setPositiveButton(getString(R.string.delete)) { _, _ ->
+                    viewModel.deleteAccount(requireContext())
+                }
+                .setNegativeButton(getString(R.string.cancel), null)
+                .show()
+        }
+    }
+
 
     private fun setupObservers() {
         viewModel.user.observe(viewLifecycleOwner) { user ->

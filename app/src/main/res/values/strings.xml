@@ -87,4 +87,21 @@
     <string name="passwords_do_not_match">Passwords não são iguais.</string>
     <string name="change_password_title">Mudar Password</string>
     <string name="profile_avatar">Avatar</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Galeria</string>
+    <string name="select_image_title">Camera ou Galeria?</string>
+    <string name="take_photo">Tirar foto</string>
+    <string name="switch_camera">Trocar camera</string>
+    <string name="back">Retornar</string>
+    <string name="delete_account">Eliminar Conta</string>
+    <string name="error_no_user_logged_in">Erro: Nenhuma sessão existente</string>
+    <string name="error_deleting_account">Erro: Problemas a eliminar a conta.</string>
+    <string name="account_deleted">Conta eliminada.</string>
+    <string name="confirm_delete_account">Tem a certeza que pretence eliminar a sua conta? Esta ação é permanente e irreversível.</string>
+    <string name="delete">Eliminar</string>
+    <string name="name_required">Nome é obrigatório\n</string>
+    <string name="email_required">Email é obrigatório</string>
+    <string name="email_invalid">Email inválido</string>
+    <string name="password_required">Password é obrigatória</string>
+    <string name="password_size">Password deve ter no mínimo 8 carateres.</string>
 </resources>

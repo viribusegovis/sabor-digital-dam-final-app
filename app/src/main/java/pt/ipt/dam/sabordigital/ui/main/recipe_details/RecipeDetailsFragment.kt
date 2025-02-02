@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.data.remote.models.IngredientListItem
 import pt.ipt.dam.sabordigital.databinding.FragmentRecipeDetailsBinding
+import pt.ipt.dam.sabordigital.utils.ImageHelper
 import pt.ipt.dam.sabordigital.utils.IngredientAdapter
 import pt.ipt.dam.sabordigital.utils.InstructionAdapter
 
@@ -40,11 +42,19 @@ class RecipeDetailsFragment : Fragment() {
 
             // Load recipe image
             if (!recipe.imageUrl.isNullOrEmpty()) {
-                // TODO: Finish this
-                /*Glide.with(requireContext())
-                    .load(recipe.imageUrl)
-                    .centerCrop()
-                    .into(recipeImage)*/
+                // Check if imageUrl looks like a Base64 string (it might start with "data:" or be very long)
+                if (recipe.imageUrl.startsWith("data:") || recipe.imageUrl.length > 500) {
+                    // If Base64-encoded, use our helper function to decode and display it.
+                    ImageHelper.setImageFromBase64(binding.recipeImage, recipe.imageUrl)
+                } else {
+                    // Otherwise, assume it's a URL and load with Glide.
+                    Glide.with(requireContext())
+                        .load(recipe.imageUrl)
+                        .centerCrop()
+                        .placeholder(R.drawable.placehold)
+                        .error(R.drawable.placehold)
+                        .into(binding.recipeImage)
+                }
             }
 
             // Set chips information
