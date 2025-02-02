@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.databinding.ActivityMainBinding
+import pt.ipt.dam.sabordigital.ui.main.profile.ProfileFragment
 import pt.ipt.dam.sabordigital.ui.main.re.RecipeListFragment
 import pt.ipt.dam.sabordigital.ui.main.recipe_create.RecipeCreationFragment
 import pt.ipt.dam.sabordigital.ui.main.ui.home.HomeFragment
@@ -54,14 +55,14 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                /*
-                * R.id.nav_profile -> {
+
+                R.id.nav_profile -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainer, ProfileFragment())
                         .commit()
                     true
                 }
-                * */
+
 
                 else -> false
             }

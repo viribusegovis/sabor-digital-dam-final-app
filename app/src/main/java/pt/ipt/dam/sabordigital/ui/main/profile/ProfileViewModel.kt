@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pt.ipt.dam.sabordigital.data.remote.api.PasswordChange
 import pt.ipt.dam.sabordigital.data.remote.models.User
 import pt.ipt.dam.sabordigital.data.retrofit.RetrofitInitializer
 
@@ -23,7 +24,7 @@ class ProfileViewModel : ViewModel() {
             try {
                 val token = getAuthToken(context)
                 if (token != null) {
-                    RetrofitInitializer().userService().getUser("Bearer $token")
+                    RetrofitInitializer().userService().getUser("$token")
                         .enqueue(object : retrofit2.Callback<User> {
                             override fun onResponse(
                                 call: retrofit2.Call<User>,
@@ -62,7 +63,8 @@ class ProfileViewModel : ViewModel() {
             try {
                 val token = getAuthToken(context)
                 if (token != null) {
-                    RetrofitInitializer().userService().changePassword("Bearer $token", newPassword)
+                    RetrofitInitializer().userService()
+                        .changePassword("$token", PasswordChange(newPassword))
                         .enqueue(object : retrofit2.Callback<Void> {
                             override fun onResponse(
                                 call: retrofit2.Call<Void>,

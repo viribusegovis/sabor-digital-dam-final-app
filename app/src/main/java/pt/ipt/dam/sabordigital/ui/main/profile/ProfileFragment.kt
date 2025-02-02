@@ -30,7 +30,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         // Load user data when the fragment is created.
         viewModel.loadUser(requireContext())
 
-
         // Change Password Button Click Listener.
         binding.btnChangePassword.setOnClickListener {
             showChangePasswordDialog()

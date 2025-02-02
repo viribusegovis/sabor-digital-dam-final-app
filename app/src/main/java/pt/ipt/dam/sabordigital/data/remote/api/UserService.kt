@@ -8,10 +8,10 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
-import retrofit2.http.PUT
 
-data class MessageResponse(
-    val message: String
+
+data class PasswordChange(
+    val password: String
 )
 
 interface UserService {
@@ -24,10 +24,10 @@ interface UserService {
         @Header("Authorization") token: String,
     ): Call<User>
 
-    @PUT("users/password")
+    @POST("users/password")
     fun changePassword(
         @Header("Authorization") token: String,
-        @Body password: String
+        @Body password: PasswordChange
     ): Call<Void>
 
 }
