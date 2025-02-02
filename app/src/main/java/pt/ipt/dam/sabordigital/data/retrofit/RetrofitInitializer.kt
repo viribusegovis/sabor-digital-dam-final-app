@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitInitializer {
     private val host =
-        "http://10.0.2.2:8080"      // Base URL for API
+        "https://dam-final-api-bmsffreitas1.replit.app"      // Base URL for API
 
     private val gson = GsonBuilder()
         .setLenient()               // Configures Gson to be lenient in parsing
