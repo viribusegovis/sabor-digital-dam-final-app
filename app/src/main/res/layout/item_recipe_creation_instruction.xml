@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Card view for an instruction step -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="4dp">
 
+    <!-- Horizontal container for the step number, instruction input, and remove button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp">
 
+        <!-- TextView displaying the step number -->
         <TextView
             android:id="@+id/tvStepNumber"
             android:layout_width="wrap_content"
@@ -18,6 +21,7 @@
             android:textAppearance="?attr/textAppearanceBody1"
             android:textStyle="bold" />
 
+        <!-- TextInputLayout wrapping the instruction text field -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilInstruction"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -25,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
+            <!-- Multi-line editable text for the instruction -->
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etInstruction"
                 android:layout_width="match_parent"
@@ -33,6 +38,7 @@
                 android:minLines="2" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Remove button for deleting this instruction step -->
         <ImageButton
             android:id="@+id/btnRemove"
             android:layout_width="wrap_content"

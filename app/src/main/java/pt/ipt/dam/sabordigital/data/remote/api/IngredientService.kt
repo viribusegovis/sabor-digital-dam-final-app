@@ -7,17 +7,23 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface IngredientService {
-    @GET("/ingredients/top/{limit}")
+    // Service interface for handling all ingredient-related API operations
+    // This interface provides three main functionalities:
+    // 1. Fetching top N most used/popular ingredients
+    // 2. Retrieving the complete ingredient database
+    // 3. Searching ingredients based on user input
+    // All operations are asynchronous using Retrofit's Call wrapper
+
+    @GET("/ingredients/top/{limit}")  // GET endpoint for retrieving top N ingredients
     fun getTopIngredients(
-        @Path("limit") limit: Int
-    ): Call<List<Ingredient>>
+        @Path("limit") limit: Int     // Dynamic path parameter specifying how many top ingredients to fetch
+    ): Call<List<Ingredient>>         // Returns a list of most commonly used ingredients
+    
 
-    @GET("/ingredients/")
-    fun getAllIngredients(): Call<List<Ingredient>>
-
-    @GET("/ingredients/search")
+    @GET("/ingredients/search")       // GET endpoint for ingredient search functionality
     fun searchIngredients(
-        @Query("query") query: String
-    ): Call<List<Ingredient>>
+        @Query("query") query: String // Query parameter for search term
+    ): Call<List<Ingredient>>         // Returns list of ingredients matching the search query
+
 
 }

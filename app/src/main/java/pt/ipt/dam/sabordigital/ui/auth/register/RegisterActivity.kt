@@ -11,24 +11,33 @@ import pt.ipt.dam.sabordigital.databinding.ActivityRegisterBinding
 import pt.ipt.dam.sabordigital.ui.auth.login.LoginActivity
 import pt.ipt.dam.sabordigital.ui.main.MainActivity
 
+// Activity handling user registration functionality
+// Manages user registration form, validation, and navigation
+// Uses ViewBinding for view access and ViewModel for business logic
+
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels()
+    private lateinit var binding: ActivityRegisterBinding   // View binding instance
+    private val viewModel: RegisterViewModel by viewModels() // ViewModel for registration logic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupObservers()
-        setupButtons()
+        setupObservers()  // Set up LiveData observers
+        setupButtons()    // Configure button behaviors
     }
 
+    /**
+     * Sets up LiveData observers for registration state
+     * Handles successful registration by saving user info and navigating to MainActivity
+     * Shows error toast on registration failure
+     */
     private fun setupObservers() {
         viewModel.loginState.observe(this) { result ->
             result.fold(
                 onSuccess = { tokenResponse ->
-                    saveLoginInfo(tokenResponse)
+                    saveLoginInfo(tokenResponse)          // Save auth info
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 },
@@ -39,6 +48,11 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Configures click listeners for registration button and login link
+     * Registration button validates inputs before attempting registration
+     * Login link navigates user back to login screen
+     */
     private fun setupButtons() {
         binding.registerButton.setOnClickListener {
             val name = binding.nameInput.text.toString()
@@ -56,6 +70,19 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Validates user input for registration form
+     *
+     * @param name User's full name
+     * @param email User's email address
+     * @param password User's chosen password
+     * @return Boolean indicating if all inputs are valid
+     *
+     * Validation rules:
+     * - Name must not be empty
+     * - Email must not be empty and must be valid format
+     * - Password must not be empty and must be at least 8 characters
+     */
     private fun validateInputs(name: String, email: String, password: String): Boolean {
         if (!viewModel.validateCredentials(name = name, email = email, password = password)) {
             if (name.isEmpty()) {
@@ -63,7 +90,6 @@ class RegisterActivity : AppCompatActivity() {
             }
             if (email.isEmpty()) {
                 binding.emailInput.error = getString(R.string.email_required)
-
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 binding.emailInput.error = getString(R.string.email_invalid)
@@ -79,6 +105,18 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * Saves user authentication information to SharedPreferences
+     *
+     * @param response TokenResponse containing user and authentication details
+     *
+     * Saved information includes:
+     * - JWT token with type
+     * - User ID
+     * - User name
+     * - User email
+     * - Last login timestamp
+     */
     private fun saveLoginInfo(response: TokenResponse) {
         val sharedPrefs = getSharedPreferences("auth_prefs", MODE_PRIVATE)
         sharedPrefs.edit()
@@ -89,5 +127,4 @@ class RegisterActivity : AppCompatActivity() {
             .putString("last_login", response.user.lastLogin)
             .apply()
     }
-
 }

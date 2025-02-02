@@ -12,12 +12,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel : ViewModel() {
-    private val _registerState = MutableLiveData<Result<UserResponse>>()
+// ViewModel responsible for handling user registration and subsequent login
+// Manages registration state, validation, and API communication
 
+class RegisterViewModel : ViewModel() {
+    // LiveData for tracking registration and login states
+    private val _registerState = MutableLiveData<Result<UserResponse>>()
     private val _loginState = MutableLiveData<Result<TokenResponse>>()
     val loginState: LiveData<Result<TokenResponse>> = _loginState
 
+    /**
+     * Handles user registration process through API
+     * On successful registration, automatically proceeds to login
+     *
+     * @param name User's full name
+     * @param email User's email address
+     * @param password User's chosen password
+     */
     fun register(name: String, email: String, password: String) {
         val request = UserCreate(email, password, name)
         RetrofitInitializer().userService().register(request)
@@ -28,8 +39,7 @@ class RegisterViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         _registerState.value = Result.success(response.body()!!)
-                        // After successful registration, proceed to login
-                        login(email, password)
+                        login(email, password)  // Automatic login after registration
                     } else {
                         _registerState.value = Result.failure(Exception("Registration failed"))
                     }
@@ -41,6 +51,12 @@ class RegisterViewModel : ViewModel() {
             })
     }
 
+    /**
+     * Handles user login process after successful registration
+     *
+     * @param email User's email address
+     * @param password User's password
+     */
     fun login(email: String, password: String) {
         val credentials = TokenRequest(email, password)
         val call = RetrofitInitializer().authService().login(credentials)
@@ -58,6 +74,19 @@ class RegisterViewModel : ViewModel() {
         })
     }
 
+    /**
+     * Validates user input credentials
+     *
+     * @param name User's full name
+     * @param email User's email address
+     * @param password User's password
+     * @return Boolean indicating if all credentials are valid
+     *
+     * Validation rules:
+     * - Name must not be empty
+     * - Email must not be empty and must be valid format
+     * - Password must not be empty and must be at least 8 characters
+     */
     fun validateCredentials(name: String, email: String, password: String): Boolean {
         if (email.isEmpty()) {
             return false
@@ -68,15 +97,12 @@ class RegisterViewModel : ViewModel() {
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return false
         }
-
         if (password.isEmpty()) {
             return false
         }
-
         if (password.length < 8) {
             return false
         }
-
         return true
     }
 }

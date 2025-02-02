@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><!-- User Agreement Layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/userAgreementLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Page Title -->
+    <TextView
+        android:id="@+id/titleAgreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/terms_n_conditions"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textColor="@color/text_primary" />
+
+    <!-- Scrollable agreement content -->
+    <ScrollView
+        android:id="@+id/scrollAgreement"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/surface"
+        android:clipToPadding="false"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/termsContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/user_agreement_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/text_secondary" />
+    </ScrollView>
+
+    <!-- Botões de ação: Recusar e Aceitar -->
+    <LinearLayout
+        android:id="@+id/actionButtons"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnDecline"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/decline" />
+
+        <Button
+            android:id="@+id/btnAccept"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/accept" />
+    </LinearLayout>
+</LinearLayout>

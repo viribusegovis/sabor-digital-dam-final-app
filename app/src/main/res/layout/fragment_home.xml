@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- SwipeRefreshLayout container -->
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Main content container -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,6 +38,7 @@
             android:clipToPadding="false"
             android:orientation="horizontal" />
 
+        <!-- Separator -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -53,18 +55,21 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/text_primary" />
 
+        <!-- Container for Categories and Loading Indicator -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/surface">
 
+            <!-- Categories RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categoriesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false" />
 
+            <!-- Progress Bar for loading categories -->
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"

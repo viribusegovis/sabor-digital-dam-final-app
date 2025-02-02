@@ -30,11 +30,11 @@
     <color name="on_error">#FFFFFF</color>        <!-- White text on error -->
     <color name="on_success">#000000</color>      <!-- Black text on success -->
 
-    <!-- Base colors -->
+    <!-- Base Colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <!-- Common variations -->
+    <!-- Common Variations -->
     <color name="white_50">#80FFFFFF</color>  <!-- 50% opacity white -->
     <color name="white_70">#B3FFFFFF</color>  <!-- 70% opacity white -->
 

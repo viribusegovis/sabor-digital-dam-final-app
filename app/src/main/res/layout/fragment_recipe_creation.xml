@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- Root container: CoordinatorLayout for Create Recipe screen -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <!-- App Bar Section -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Toolbar with title "Create Recipe" -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -18,11 +20,13 @@
             app:titleTextColor="@color/background" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Main Scrollable Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- Content Container -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,13 +40,14 @@
                 app:cardBackgroundColor="@color/surface"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <!-- Container for image and camera preview -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/mainContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/background">
 
-                    <!-- Image Container: visible initially -->
+                    <!-- Image Container (initially visible) with placeholder and add image button -->
                     <FrameLayout
                         android:id="@+id/imageContainer"
                         android:layout_width="0dp"
@@ -60,7 +65,7 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/placehold" />
 
-                        <!-- Add Image Button (initially visible) -->
+                        <!-- Add Image Button -->
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/btnAddImage"
                             android:layout_width="wrap_content"
@@ -71,7 +76,7 @@
                             app:srcCompat="@drawable/ic_add_photo" />
                     </FrameLayout>
 
-                    <!-- Camera Preview Container: initially GONE -->
+                    <!-- Camera Preview Container (initially hidden) -->
                     <FrameLayout
                         android:id="@+id/cameraPreviewContainer"
                         android:layout_width="0dp"
@@ -81,14 +86,14 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/imageContainer">
 
-                        <!-- Live Preview using PreviewView -->
+                        <!-- Live Camera Preview -->
                         <androidx.camera.view.PreviewView
                             android:id="@+id/previewView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop" />
 
-                        <!-- Take Photo Button: centered at bottom -->
+                        <!-- Take Photo Button -->
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/btnTakePhoto"
                             android:layout_width="wrap_content"
@@ -98,7 +103,7 @@
                             android:contentDescription="@string/take_photo"
                             app:srcCompat="@drawable/ic_camera" />
 
-                        <!-- Switch Camera Button: bottom-right -->
+                        <!-- Switch Camera Button -->
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/btnSwitchCamera"
                             android:layout_width="wrap_content"
@@ -108,7 +113,7 @@
                             android:contentDescription="@string/switch_camera"
                             app:srcCompat="@drawable/ic_switch_camera" />
 
-                        <!-- Back Button: top-left -->
+                        <!-- Back Button to exit camera preview -->
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/btnBackFromCamera"
                             android:layout_width="wrap_content"
@@ -118,12 +123,10 @@
                             android:contentDescription="@string/back"
                             app:srcCompat="@drawable/ic_back" />
                     </FrameLayout>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Category Selection -->
+            <!-- Category Selection Section -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/categorySection"
                 android:layout_width="match_parent"
@@ -137,18 +140,21 @@
                     android:orientation="vertical"
                     android:padding="8dp">
 
+                    <!-- Category Title -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/categorias"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
+                    <!-- Chip Group for selecting categories -->
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chipGroupCategories"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp" />
 
+                    <!-- Error message for category selection -->
                     <TextView
                         android:id="@+id/categoryError"
                         android:layout_width="wrap_content"
@@ -160,7 +166,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Recipe Metadata -->
+            <!-- Recipe Metadata Section -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilTitle"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -204,6 +210,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/tilDescription">
 
+                <!-- Preparation Time Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPrepTime"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -219,6 +226,7 @@
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Servings Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilServings"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -236,7 +244,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <!-- Difficulty Dropdown -->
+            <!-- Difficulty Dropdown Section -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilDifficulty"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -339,6 +347,7 @@
                 android:text="@string/create_recipe"
                 app:layout_constraintTop_toBottomOf="@id/btnAddStep" />
 
+            <!-- Progress Bar Overlay -->
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"

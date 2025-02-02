@@ -7,9 +7,13 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
-    @POST("/token")
+    // Defines an authentication service interface for API communication
+    // This interface is used with Retrofit to handle authentication
+    // The login function sends user credentials and receives an auth token
+
+    @POST("/token")  // Specifies this is a POST request to the "/token" endpoint
     fun login(
-        @Body credentials: TokenRequest
-    ): Call<TokenResponse>
+        @Body credentials: TokenRequest  // Takes a TokenRequest object as the request body
+    ): Call<TokenResponse>  // Returns a Retrofit Call object wrapping TokenResponse
 
 }

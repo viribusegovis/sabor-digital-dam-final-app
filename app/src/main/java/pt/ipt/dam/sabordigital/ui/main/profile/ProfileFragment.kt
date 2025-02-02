@@ -14,6 +14,10 @@ import pt.ipt.dam.sabordigital.R
 import pt.ipt.dam.sabordigital.databinding.FragmentProfileBinding
 import pt.ipt.dam.sabordigital.ui.auth.login.LoginActivity
 
+/**
+ * Fragment displaying user profile details.
+ * Provides functionality for password change, account deletion, and logout.
+ */
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private var _binding: FragmentProfileBinding? = null
@@ -21,35 +25,54 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val viewModel by viewModels<ProfileViewModel>()
 
+    /**
+     * Called immediately after onCreateView().
+     *
+     * Binds views, sets up observers, loads user data, and handles click events.
+     *
+     * @param view The view returned by onCreateView().
+     * @param savedInstanceState If the fragment is being re-created from a previous state.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Bind the view to the binding object.
         _binding = FragmentProfileBinding.bind(view)
 
+        // Set up LiveData observers.
         setupObservers()
 
-        // Load user data when the fragment is created.
+        // Load user data.
         viewModel.loadUser(requireContext())
 
-        // Change Password Button Click Listener.
+        // Set click listener for Change Password button.
         binding.btnChangePassword.setOnClickListener {
             showChangePasswordDialog()
         }
 
-        // Logout Button Click Listener.
+        // Set click listener for Logout button.
         binding.btnLogout.setOnClickListener {
             viewModel.logout(requireContext())
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
 
+        // Set up Delete Account button with confirmation dialog.
         setupDeleteAccountButton()
     }
 
+    /**
+     * Displays a dialog for changing the user password.
+     *
+     * The dialog collects the new password and its confirmation.
+     * If the new password is valid and the fields match, it calls the ViewModel's changePassword function.
+     * Appropriate feedback is displayed via toast messages.
+     */
     private fun showChangePasswordDialog() {
-        // Inflate the change password layout.
+        // Inflate the change password dialog layout.
         val dialogView = LayoutInflater.from(requireContext())
             .inflate(R.layout.dialog_change_password, null)
+        // Retrieve references to the password input fields.
         val etNewPassword = dialogView.findViewById<TextInputEditText>(R.id.etNewPassword)
         val etConfirmPassword = dialogView.findViewById<TextInputEditText>(R.id.etConfirmPassword)
 
@@ -62,7 +85,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 val confirmPassword = etConfirmPassword.text.toString()
 
                 if (newPassword.isNotEmpty() && newPassword == confirmPassword) {
-                    // Call your ViewModel to perform the password change.
+                    // Call ViewModel to update the password.
                     viewModel.changePassword(requireContext(), newPassword) { success ->
                         if (success) {
                             Toast.makeText(
@@ -93,9 +116,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             .show()
     }
 
+    /**
+     * Sets up a click listener for the Delete Account button.
+     *
+     * Displays a confirmation dialog before invoking account deletion via the ViewModel.
+     */
     private fun setupDeleteAccountButton() {
         binding.btnDeleteAccount.setOnClickListener {
-            // Show a confirmation dialog
+            // Display a confirmation alert dialog.
             AlertDialog.Builder(requireContext())
                 .setTitle(getString(R.string.delete_account))
                 .setMessage(getString(R.string.confirm_delete_account))
@@ -107,7 +135,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
-
+    /**
+     * Sets up observers to listen for changes in user data.
+     *
+     * Once user data is available, updates the UI components accordingly.
+     */
     private fun setupObservers() {
         viewModel.user.observe(viewLifecycleOwner) { user ->
             binding.tvProfileName.text = user.name
@@ -115,6 +147,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
+    /**
+     * Called when the fragment's view is about to be destroyed.
+     *
+     * Clears the binding reference to avoid memory leaks.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

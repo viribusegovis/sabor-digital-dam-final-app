@@ -1,6 +1,5 @@
 package pt.ipt.dam.sabordigital.ui.main.ui.home
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,8 +20,16 @@ class HomeViewModel : ViewModel() {
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-
-    fun fetchCategories(context: Context) {
+    /**
+     * Fetches the list of recipe categories from the API.
+     *
+     * This method initiates a network call to retrieve categories using Retrofit.
+     * Upon receiving a successful response, it updates the [_categories] LiveData.
+     * The [_loading] LiveData is updated to false when the API call completes,
+     * regardless of success or failure.
+     */
+    fun fetchCategories() {
+        _loading.value = true
         RetrofitInitializer().categoryService().getCategories()
             .enqueue(object : Callback<List<Category>> {
                 override fun onResponse(
@@ -41,7 +48,15 @@ class HomeViewModel : ViewModel() {
             })
     }
 
-    fun fetchPopularIngredients(context: Context) {
+    /**
+     * Fetches the list of popular ingredients from the API.
+     *
+     * This method retrieves the top 10 ingredients by initiating a network call via Retrofit.
+     * On success, it updates the [_ingredients] LiveData with the retrieved list.
+     * Regardless of the outcome, the [_loading] state is set to false after the API call.
+     */
+    fun fetchPopularIngredients() {
+        _loading.value = true
         RetrofitInitializer().ingredientService().getTopIngredients(10)
             .enqueue(object : Callback<List<Ingredient>> {
                 override fun onResponse(

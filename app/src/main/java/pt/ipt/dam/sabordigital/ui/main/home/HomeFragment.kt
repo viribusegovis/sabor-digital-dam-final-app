@@ -21,6 +21,14 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
 
+    /**
+     * Inflates the fragment's view using view binding.
+     *
+     * @param inflater LayoutInflater to inflate views in the fragment.
+     * @param container Optional parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     * @return The root view of the inflated layout.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +38,13 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-
+    /**
+     * Called immediately after onCreateView().
+     * Sets up UI components, observers, and triggers data loading.
+     *
+     * @param view The view returned by onCreateView().
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupWelcomeMessage()
@@ -39,26 +53,40 @@ class HomeFragment : Fragment() {
         loadData()
     }
 
+    /**
+     * Sets up a welcome message using the user name retrieved from SharedPreferences.
+     * Displays a personalized greeting.
+     */
     private fun setupWelcomeMessage() {
         val sharedPrefs = requireActivity().getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
         val userName = sharedPrefs.getString("user_name", "") ?: ""
-
-        binding.welcomeText.text =
-            getString(R.string.welcome_message, userName)
+        binding.welcomeText.text = getString(R.string.welcome_message, userName)
     }
 
-
+    /**
+     * Configures the RecyclerViews for displaying ingredients and categories.
+     * Sets:
+     * - Horizontal LinearLayoutManager for ingredients list.
+     * - GridLayoutManager with 2 columns for categories.
+     */
     private fun setupRecyclerViews() {
         binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
             false
         )
-
         binding.categoriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
     }
 
-
+    /**
+     * Sets up observers for LiveData objects from the HomeViewModel.
+     * Handles:
+     * - Categories list: Sets an adapter with click listener to navigate to filtered RecipeListFragment.
+     * - Ingredients list: Maps each ingredient to an IngredientOnly type and sets an adapter with a click listener.
+     * - Loading state: Shows or hides the progress bar and stops swipe refresh animation when loading completes.
+     *
+     * Also configures the swipe-to-refresh layout and its color scheme.
+     */
     private fun setupObservers() {
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             binding.categoriesRecyclerView.adapter = CategoryAdapter(categories) { category ->
@@ -94,7 +122,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             if (!isLoading) {
@@ -112,18 +139,23 @@ class HomeFragment : Fragment() {
             R.color.primary_dark,
             R.color.accent
         )
-
     }
 
+    /**
+     * Initiates loading of categories and popular ingredients data.
+     * Displays the swipe-to-refresh indicator while loading data.
+     */
     private fun loadData() {
         context?.let {
             binding.swipeRefreshLayout.isRefreshing = true
-            viewModel.fetchCategories(it)
-            viewModel.fetchPopularIngredients(it)
+            viewModel.fetchCategories()
+            viewModel.fetchPopularIngredients()
         }
     }
 
-
+    /**
+     * Cleans up the binding instance when the view is destroyed to avoid memory leaks.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

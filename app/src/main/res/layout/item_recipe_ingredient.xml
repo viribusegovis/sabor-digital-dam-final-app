@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- Card view for displaying an ingredient item -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,6 +8,7 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="1dp">
 
+    <!-- Horizontal container for ingredient details -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,6 +16,7 @@
         android:orientation="horizontal"
         android:padding="12dp">
 
+        <!-- Ingredient name -->
         <TextView
             android:id="@+id/ingredientName"
             android:layout_width="0dp"
@@ -24,6 +26,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <!-- Ingredient amount -->
         <TextView
             android:id="@+id/ingredientAmount"
             android:layout_width="wrap_content"

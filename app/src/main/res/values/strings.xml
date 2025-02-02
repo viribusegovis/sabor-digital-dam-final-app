@@ -55,7 +55,7 @@
     <string name="add_ingredient">Adicionar Ingrediente</string>
     <string name="add_step">Adicionar passo</string>
     <string name="category">Categoria</string>
-    <string name="recipe_image">Imagem</string>
+    <string name="recipe_image">Imagem da receita</string>
     <string name="add_category">Adicionar Categoria</string>
     <string name="ingredient">Ingrediente</string>
     <string name="amount">Quantidade\n</string>
@@ -104,4 +104,42 @@
     <string name="email_invalid">Email inválido</string>
     <string name="password_required">Password é obrigatória</string>
     <string name="password_size">Password deve ter no mínimo 8 carateres.</string>
+    <string name="info_about">Sobre Mim</string>
+    <string name="about_us_info">
+
+        Nome do Aluno: Bruno miguel Simões Freitas\n
+        Número: 22912\n\n
+        Desenvolvimento de Aplicações Moveis\n
+        Licenciatura de Engenharia Informática\n
+        IPT, 2024/2025\n\n
+        Tecnologias utilizadas:\n
+        - Kotlin\n
+        - Android Studio\n
+        - Jetpack Compose\n
+        - View Binding\n
+        - REST APIs\n
+        - GitHub\n
+
+        Bibliotecas e frameworks de terceiros:\n
+        1. Retrofit\n
+        2. Gson\n
+        3. Glide\n
+        4. Material Design Components\n
+        5. ConstraintLayout\n
+        6. CameraX Core, Lifecycle, View, Extensions\n
+
+    </string>
+    <string name="ok">OK</string>
+    <string name="invalid_credentials">Credenciais Inválidas!</string>
+    <string name="user_agreement_content"><![CDATA[
+A sua privacidade é uma prioridade para nós. Recolhemos apenas os dados estritamente necessários para o funcionamento da aplicação, como informações de autenticação e preferências de utilizador. Estes dados nunca serão vendidos ou partilhados com terceiros sem o seu consentimento explícito.\n\n
+
+Os seus dados são armazenados de forma segura e protegidos contra acessos não autorizados, utilizando as melhores práticas de segurança da indústria. Além disso, respeitamos os seus direitos como utilizador, permitindo-lhe aceder, corrigir ou eliminar os seus dados pessoais a qualquer momento. Para mais informações, contacte ViribusEgoVis@proton.me.
+    ]]>
+    </string>
+
+    <string name="decline">Recusar</string>
+    <string name="accept">Aceitar</string>
+    <string name="terms_n_conditions">Termos e Condições de Uso</string>
+    <string name="category_image">Imagem da categoria</string>
 </resources>

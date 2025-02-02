@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Card view for a single ingredient item -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="4dp">
 
+    <!-- Horizontal container for ingredient name, amount, unit and remove button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp">
 
+        <!-- TextInputLayout for ingredient name (read-only) -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilIngredientName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -27,7 +30,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
+        <!-- TextInputLayout for amount input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilAmount"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -44,6 +47,7 @@
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- TextInputLayout for unit input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUnit"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -59,6 +63,7 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Remove button for ingredient item -->
         <ImageButton
             android:id="@+id/btnRemove"
             android:layout_width="wrap_content"

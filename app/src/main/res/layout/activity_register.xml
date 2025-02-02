@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- HEADER SECTION: App logo and name -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,12 +7,14 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Logo and App Name Container -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <!-- App logo -->
         <ImageView
             android:id="@+id/appLogo"
             android:layout_width="120dp"
@@ -21,6 +23,7 @@
             android:contentDescription="@string/app_logo"
             android:src="@drawable/logo" />
 
+        <!-- App name -->
         <TextView
             android:id="@+id/appName"
             android:layout_width="wrap_content"
@@ -33,6 +36,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- INPUT FIELDS SECTION: Name, Email, and Password inputs -->
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -41,6 +45,7 @@
         android:gravity="center_horizontal"
         android:textColorHint="@color/text_hint">
 
+        <!-- Name input field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameInput"
             android:layout_width="380dp"
@@ -58,6 +63,7 @@
         android:gravity="center_horizontal"
         android:textColorHint="@color/text_hint">
 
+        <!-- Email input field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
@@ -75,6 +81,7 @@
         android:gravity="center_horizontal"
         android:textColorHint="@color/text_hint">
 
+        <!-- Password input field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordInput"
             android:layout_width="380dp"
@@ -84,6 +91,7 @@
             android:textColor="@color/text_primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- BUTTON SECTION: Register button and Login link -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerButton"
         android:layout_width="300dp"

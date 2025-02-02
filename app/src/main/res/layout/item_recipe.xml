@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- MaterialCardView wrapping the entire recipe item -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,19 +8,23 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
+    <!-- Main container using ConstraintLayout for flexible positioning -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface">
 
+        <!-- Recipe Image: displays the recipe thumbnail -->
         <ImageView
             android:id="@+id/recipeImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:contentDescription="@string/recipe_image"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Recipe Title: positioned to the right of the image -->
         <TextView
             android:id="@+id/titleText"
             android:layout_width="0dp"
@@ -35,6 +39,7 @@
             app:layout_constraintStart_toEndOf="@id/recipeImage"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Recipe Description: appears below the title and limited to 2 lines -->
         <TextView
             android:id="@+id/descriptionText"
             android:layout_width="0dp"
@@ -47,6 +52,7 @@
             app:layout_constraintStart_toStartOf="@id/titleText"
             app:layout_constraintTop_toBottomOf="@id/titleText" />
 
+        <!-- Difficulty Chip: displays recipe difficulty (e.g., Easy, Medium, Hard) -->
         <com.google.android.material.chip.Chip
             android:id="@+id/difficultyChip"
             android:layout_width="wrap_content"
@@ -58,6 +64,7 @@
             app:layout_constraintStart_toStartOf="@id/titleText"
             app:layout_constraintTop_toBottomOf="@id/descriptionText" />
 
+        <!-- Time Chip: displays the preparation time (positioned next to difficulty) -->
         <com.google.android.material.chip.Chip
             android:id="@+id/timeChip"
             android:layout_width="wrap_content"
@@ -69,6 +76,7 @@
             app:layout_constraintStart_toEndOf="@id/difficultyChip"
             app:layout_constraintTop_toTopOf="@id/difficultyChip" />
 
+        <!-- Servings Chip: displays the number of servings (positioned next to time chip) -->
         <com.google.android.material.chip.Chip
             android:id="@+id/servingsChip"
             android:layout_width="wrap_content"
