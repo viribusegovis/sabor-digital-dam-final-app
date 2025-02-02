@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Sabor Digital</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="field_name">Nome</string>
     <string name="field_email">Email</string>
     <string name="field_password">Password</string>
@@ -76,6 +75,16 @@
     <string name="error_instruction_required">A instrução é obrigatória</string>
     <string name="select_ingredient">Selecionar Ingrediente</string>
     <string name="search_ingredient">Procurar</string>
+    <string name="my_recipes">Minhas Receitas</string>
+    <string name="change_password">Mudar Password</string>
+    <string name="logout_button_text">Terminar Sessão</string>
+    <string name="new_password">Nova Password</string>
+    <string name="confirm_password">Confirmar Password</string>
+    <string name="submit">Submeter</string>
     <string name="cancel">Cancelar</string>
-
+    <string name="password_changed">Password atualizada com sucesso!</string>
+    <string name="password_change_failed">Erro a atualizar a password.</string>
+    <string name="passwords_do_not_match">Passwords não são iguais.</string>
+    <string name="change_password_title">Mudar Password</string>
+    <string name="profile_avatar">Avatar</string>
 </resources>

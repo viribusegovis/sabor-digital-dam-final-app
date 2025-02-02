@@ -21,6 +21,11 @@ interface RecipeService {
         @Path("id") id: Int
     ): Call<Recipe>
 
+    @GET("/recipes/author/")
+    fun getMyRecipes(
+        @Header("Authorization") token: String
+    ): Call<List<Recipe>>
+
     @GET("/recipes/category/{categoryId}")
     fun getRecipesByCategory(
         @Path("categoryId") categoryId: Int

@@ -40,7 +40,7 @@ class RecipeListViewModel : ViewModel() {
             currentCategoryId != null -> filterByCategory(currentCategoryId!!)
             currentIngredientId != null -> filterByIngredient(currentIngredientId!!)
             currentSearchQuery != null -> searchRecipes(currentSearchQuery!!)
-            else -> return
+            else -> loadRecipes()
         }
     }
 

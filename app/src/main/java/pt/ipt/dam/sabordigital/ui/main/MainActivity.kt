@@ -31,10 +31,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, HomeFragment())
                 .commit()
         }
-
-
     }
-
 
     private fun setupNavigationDrawer() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

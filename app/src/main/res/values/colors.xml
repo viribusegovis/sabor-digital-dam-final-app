@@ -25,11 +25,6 @@
     <color name="button_disabled">#E0E0E0</color>
     <color name="button_pressed">#4F378B</color> <!-- Primary Dark -->
 
-    <!-- Difficulty Levels -->
-    <color name="difficulty_easy">#4CAF50</color> <!-- Green -->
-    <color name="difficulty_medium">#FF9800</color> <!-- Orange -->
-    <color name="difficulty_hard">#E53935</color> <!-- Red -->
-
     <!-- Additional Accessibility Colors -->
     <color name="on_primary">#FFFFFF</color>      <!-- White text on primary -->
     <color name="on_error">#FFFFFF</color>        <!-- White text on error -->
